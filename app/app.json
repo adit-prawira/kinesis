@@ -1,0 +1,12 @@
+{
+  "name": "run-app",
+  "displayName": "run-app",
+  "expo": {
+    "name": "run-app",
+    "slug": "run-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
