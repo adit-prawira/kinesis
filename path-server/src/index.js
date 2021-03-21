@@ -4,9 +4,12 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const mongoose = require("mongoose");
-
+const bodyParser = require("body-parser");
+const authRouter = require("./routes/authRoutes");
 const app = express();
 const mongoUri = process.env.DB_URL;
+app.use(bodyParser.json());
+app.use(authRouter);
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useCreateIndex: true,
