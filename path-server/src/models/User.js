@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+
+// Data structure of user to be saved in mongoose database
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
