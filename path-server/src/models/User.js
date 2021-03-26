@@ -43,7 +43,9 @@ userSchema.pre("save", function (next) {
 
 // login process attempted by existing user
 userSchema.methods.comparePassword = function (candidatePassword) {
-    const user = this; // with already salted password
+    // with already salted password
+    const user = this;
+
     return new Promise((resolve, reject) => {
         // compare the password user trying to log in with and
         // compare it withe the salted password of the user in the database
