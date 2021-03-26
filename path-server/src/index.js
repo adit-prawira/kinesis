@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const authRouter = require("./routes/authRoutes");
 const app = express();
 const mongoUri = process.env.DB_URL;
-
+const requireAuth = require("./middlewares/requireAuth");
 app.use(bodyParser.json());
 app.use(authRouter);
 
@@ -28,8 +28,8 @@ mongoose.connection.on("error", () => {
     console.error("Error connecting to mongo database");
 });
 
-app.get("/", (req, res) => {
-    res.send("hi");
+app.get("/", requireAuth, (req, res) => {
+    res.send(`Your email: ${req.user.email}`);
 });
 
 app.listen(3000, () => {
