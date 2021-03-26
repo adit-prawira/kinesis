@@ -1,18 +1,22 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-// Require Schema
+// Require Schema of models
 require("./models/User");
+require("./models/Track");
 
+// require used Libraries
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const authRouter = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
 const app = express();
 const mongoUri = process.env.DB_URL;
 const requireAuth = require("./middlewares/requireAuth");
 app.use(bodyParser.json());
-app.use(authRouter);
+app.use(authRoutes);
+app.use(trackRoutes);
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
