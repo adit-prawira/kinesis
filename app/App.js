@@ -1,4 +1,3 @@
-import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
@@ -15,7 +14,7 @@ const switchNavigator = createSwitchNavigator({
         Signin: SignInScreen,
     }),
     mainFlow: createBottomTabNavigator({
-        trackListFlow: createStackNavigator({
+        Tracks: createStackNavigator({
             List: TrackListScreen,
             Detail: TrackDetailScreen,
         }),
