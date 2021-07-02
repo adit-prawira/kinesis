@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
+    require("dotenv/types").config();
 }
 // Require Schema of models
 require("./models/User");

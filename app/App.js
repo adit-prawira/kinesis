@@ -12,6 +12,8 @@ import CreateTrackScreen from "./src/screens/CreateTrackScreen.jsx";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen.jsx";
 import TrackListScreen from "./src/screens/TrackListScreen.jsx";
 
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider } from "@ui-kitten/components";
 const switchNavigator = createSwitchNavigator({
     loginFlow: createStackNavigator({
         SignUp: SignUpScreen,
@@ -29,14 +31,18 @@ const switchNavigator = createSwitchNavigator({
 
 const App = createAppContainer(switchNavigator);
 
-export default () => {
+const MainApp = () => {
     return (
         <AuthProvider>
-            <App
-                ref={(navigator) => {
-                    setNavigator(navigator);
-                }}
-            />
+            <ApplicationProvider {...eva} theme={eva.dark}>
+                <App
+                    ref={(navigator) => {
+                        setNavigator(navigator);
+                    }}
+                />
+            </ApplicationProvider>
         </AuthProvider>
     );
 };
+
+export default MainApp;
