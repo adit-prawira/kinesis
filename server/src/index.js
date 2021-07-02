@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-    require("dotenv/types").config();
+    require("dotenv").config();
 }
 // Require Schema of models
 require("./models/User");
@@ -8,7 +8,7 @@ require("./models/Track");
 // require used Libraries
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+
 const authRoutes = require("./routes/authRoutes");
 const trackRoutes = require("./routes/trackRoutes");
 const app = express();

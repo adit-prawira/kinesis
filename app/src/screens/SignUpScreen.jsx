@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
 });
 
 const SignUpScreen = () => {
-    const { state, signUp, clearErrorMessage } = useContext(AuthContext);
+    const { state, signUp, clearErrorMessage, autoLocalSignIn } =
+        useContext(AuthContext);
     const { errorMessage } = state;
+
     return (
         <View style={styles.container}>
             <NavigationEvents onWillFocus={clearErrorMessage} />

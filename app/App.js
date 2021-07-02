@@ -11,10 +11,11 @@ import SignUpScreen from "./src/screens/SignUpScreen.jsx";
 import CreateTrackScreen from "./src/screens/CreateTrackScreen.jsx";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen.jsx";
 import TrackListScreen from "./src/screens/TrackListScreen.jsx";
-
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen.jsx";
 const switchNavigator = createSwitchNavigator({
+    ResolveAuth: ResolveAuthScreen,
     loginFlow: createStackNavigator({
         SignUp: SignUpScreen,
         SignIn: SignInScreen,

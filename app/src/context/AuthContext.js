@@ -57,6 +57,16 @@ const signOut = (dispatch) => async () => {
     // API request to sign out, might destroy jwt token
 };
 
+const autoLocalSignIn = (dispatch) => async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+        dispatch({ type: SIGN_IN, payload: token });
+        navigate("List");
+    } else {
+        navigate("SignUp");
+    }
+};
+
 const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: CLEAR_ERROR_MESSAGE });
 };
@@ -78,6 +88,6 @@ function authReducer(state, action) {
 // createDataContext(reducer, actions, defaultValue)
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
-    { signUp, signIn, signOut, clearErrorMessage }, // action functions
+    { signUp, signIn, signOut, clearErrorMessage, autoLocalSignIn }, // action functions
     { token: null, errorMessage: "" } // initial state or default value
 );
