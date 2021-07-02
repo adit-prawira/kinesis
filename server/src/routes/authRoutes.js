@@ -20,6 +20,7 @@ router.post("/signup", async (req, res) => {
 
         res.send({ token });
     } catch (e) {
+        console.log(e.message);
         // status code of invalid data.
         res.status(422).send(e.message);
     }

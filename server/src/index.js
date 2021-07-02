@@ -14,7 +14,10 @@ const trackRoutes = require("./routes/trackRoutes");
 const app = express();
 const mongoUri = process.env.DB_URL;
 const requireAuth = require("./middlewares/requireAuth");
-app.use(bodyParser.json());
+
+const PORT = process.env.PORT ? process.env.PORT : 5000;
+
+app.use(express.json());
 app.use(authRoutes);
 app.use(trackRoutes);
 
@@ -36,6 +39,6 @@ app.get("/", requireAuth, (req, res) => {
     res.send(`Your email: ${req.user.email}`);
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log("Listening to port 5000");
 });
