@@ -55,6 +55,8 @@ const signIn =
 
 const signOut = (dispatch) => async () => {
     // API request to sign out, might destroy jwt token
+    await AsyncStorage.removeItem("token");
+    navigate("SignUp");
 };
 
 const autoLocalSignIn = (dispatch) => async () => {
