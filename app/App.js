@@ -14,6 +14,7 @@ import TrackListScreen from "./src/screens/TrackListScreen.jsx";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen.jsx";
+
 const switchNavigator = createSwitchNavigator({
     ResolveAuth: ResolveAuthScreen,
     loginFlow: createStackNavigator({
@@ -25,6 +26,7 @@ const switchNavigator = createSwitchNavigator({
             List: TrackListScreen,
             Detail: TrackDetailScreen,
         }),
+
         Create: CreateTrackScreen,
         Account: AccountScreen,
     }),

@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
 const TrackListScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Text style={{ fontSize: 48, textAlign: "center", color: "white" }}>
-                Track List Screen
-            </Text>
             <Button
                 appearance="outline"
                 status="success"
