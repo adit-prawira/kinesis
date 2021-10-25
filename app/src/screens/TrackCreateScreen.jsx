@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
         color: "rgb(236, 102, 101)",
     },
     title: { fontSize: 20, textAlign: "center", color: "white", margin: "2%" },
-    buttons: {
-        flexDirection: "column",
-        justifyContent: "space-between",
+    button: {
+        margin:"2%",
+        textAlign: "center",
     },
 });
 
@@ -50,7 +50,7 @@ export const AddIcon = () => (
 );
 const TrackCreateScreen = ({ isFocused }) => {
     const { addLocation } = useContext(LocationContext);
-    const [error] = useLocation((location) => addLocation(location));
+    const [error] = useLocation(isFocused, addLocation);
 
     return (
         <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
@@ -62,11 +62,12 @@ const TrackCreateScreen = ({ isFocused }) => {
                     Please enable location services
                 </Text>
             )}
-            <Layout style={styles.buttons}>
+            <Layout>
                 <Button
                     appearance="outline"
                     status="danger"
                     accessoryLeft={StartRecordIcon}
+                    style={styles.button}
                 >
                     Record Track
                 </Button>
@@ -74,6 +75,7 @@ const TrackCreateScreen = ({ isFocused }) => {
                     appearance="outline"
                     status="success"
                     accessoryLeft={AddIcon}
+                    style={styles.button}
                 >
                     Add New Track
                 </Button>
