@@ -4,16 +4,15 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./src/navigationRef";
-
 import AccountScreen from "./src/screens/AccountScreen.jsx";
 import SignInScreen from "./src/screens/SignInScreen.jsx";
 import SignUpScreen from "./src/screens/SignUpScreen.jsx";
-import CreateTrackScreen from "./src/screens/CreateTrackScreen.jsx";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen.jsx";
 import TrackListScreen from "./src/screens/TrackListScreen.jsx";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen.jsx";
+import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 
 const switchNavigator = createSwitchNavigator({
     ResolveAuth: ResolveAuthScreen,
@@ -26,7 +25,7 @@ const switchNavigator = createSwitchNavigator({
             List: TrackListScreen,
             Detail: TrackDetailScreen,
         }),
-        Create: CreateTrackScreen,
+        Create: TrackCreateScreen,
         Account: AccountScreen,
     }),
 });
