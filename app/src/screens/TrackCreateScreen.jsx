@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Text, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native";
-import Map from "../components/Map";
-import { Button } from "@ui-kitten/components";
 import {
-    requestForegroundPermissionsAsync,
-    watchPositionAsync,
-    Accuracy,
-} from "expo-location";
-import "../_mockLocation";
+    SafeAreaView,
+    NavigationEvents,
+    withNavigationFocus,
+} from "react-navigation";
+import Map from "../components/Map";
+import { Button, Layout } from "@ui-kitten/components";
+import { Context as LocationContext } from "../context/LocationContext";
+import { Icon } from "react-native-eva-icons";
+import { useLocation } from "../hooks";
+
+// import "../_mockLocation";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -22,49 +25,59 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: "rgb(236, 102, 101)",
     },
+    title: { fontSize: 20, textAlign: "center", color: "white", margin: "2%" },
+    buttons: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+    },
 });
 
-const TrackCreateScreen = () => {
-    const [error, setError] = useState(null);
-    const startWatching = async () => {
-        let obj = await requestForegroundPermissionsAsync();
-        // const obj = await requestForegroundPermissionsAsync();
-        // console.log(obj);
-        // try {
-        //     // const obj = await requestForegroundPermissionsAsync();
-        //     // console.log(obj);
-        //     // if (!granted) throw new Error("Location permission not granted");
-        //     // await watchPositionAsync(
-        //     //     {
-        //     //         accuracy: Accuracy.BestForNavigation,
-        //     //         timeInterval: 1000, // update once every second
-        //     //         distanceInterval: 10, // update once every 10 meters
-        //     //     },
-        //     //     (location) => {
-        //     //         console.log(location);
-        //     //     }
-        //     // );
-        // } catch (e) {
-        //     setError(e);
-        // }
-    };
-
-    useEffect(() => {
-        startWatching();
-    }, []);
+export const StartRecordIcon = () => (
+    <Icon
+        name="play-circle-outline"
+        fill="rgb(233, 79, 144)"
+        width={24}
+        height={24}
+    />
+);
+export const AddIcon = () => (
+    <Icon
+        name="plus-outline"
+        fill="rgb(102, 220, 156)"
+        width={24}
+        height={24}
+    />
+);
+const TrackCreateScreen = ({ isFocused }) => {
+    const { addLocation } = useContext(LocationContext);
+    const [error] = useLocation((location) => addLocation(location));
 
     return (
         <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
-            <Text h3>Create New Track</Text>
+            <Text style={styles.title}>Create New Track</Text>
             <Map />
+            <NavigationEvents onWillBlur={() => console.log("leaving")} />
             {error && (
                 <Text style={styles.errorMessage}>
                     Please enable location services
                 </Text>
             )}
-            <Button appearance="outline" status="success">
-                Add New Track
-            </Button>
+            <Layout style={styles.buttons}>
+                <Button
+                    appearance="outline"
+                    status="danger"
+                    accessoryLeft={StartRecordIcon}
+                >
+                    Record Track
+                </Button>
+                <Button
+                    appearance="outline"
+                    status="success"
+                    accessoryLeft={AddIcon}
+                >
+                    Add New Track
+                </Button>
+            </Layout>
         </SafeAreaView>
     );
 };
@@ -80,4 +93,4 @@ TrackCreateScreen.navigationOptions = () => {
         },
     };
 };
-export default TrackCreateScreen;
+export default withNavigationFocus(TrackCreateScreen);

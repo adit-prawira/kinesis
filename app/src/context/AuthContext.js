@@ -3,7 +3,7 @@ import trackApi from "../api/trackApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SIGN_IN, SIGN_OUT, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./types";
 import { navigate } from "../navigationRef";
-
+import produce from "immer";
 // auth action functions
 const signUp =
     (dispatch) =>
@@ -73,23 +73,27 @@ const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: CLEAR_ERROR_MESSAGE });
 };
 
+const initialState = { token: null, errorMessage: "" };
 // authReducer
-function authReducer(state, action) {
+const authReducer = produce((state = initialState, action) => {
     switch (action.type) {
         case SIGN_IN:
-            return { ...state, errorMessage: "", token: action.payload };
+            state.errorMessage = "";
+            state.token = action.payload;
+            return state;
         case AUTH_ERROR:
-            return { ...state, errorMessage: action.payload };
+            state.errorMessage = action.payload;
+            return state;
         case CLEAR_ERROR_MESSAGE:
-            return { ...state, errorMessage: "" };
+            state.errorMessage = "";
+            return state;
         default:
             return state;
     }
-}
+});
 
-// createDataContext(reducer, actions, defaultValue)
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
     { signUp, signIn, signOut, clearErrorMessage, autoLocalSignIn }, // action functions
-    { token: null, errorMessage: "" } // initial state or default value
+    initialState // initial state or default value
 );

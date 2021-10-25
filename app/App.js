@@ -3,6 +3,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { Provider as LocationProvider } from "./src/context/LocationContext";
 import { setNavigator } from "./src/navigationRef";
 import AccountScreen from "./src/screens/AccountScreen.jsx";
 import SignInScreen from "./src/screens/SignInScreen.jsx";
@@ -34,15 +35,17 @@ const App = createAppContainer(switchNavigator);
 
 const MainApp = () => {
     return (
-        <AuthProvider>
-            <ApplicationProvider {...eva} theme={eva.dark}>
-                <App
-                    ref={(navigator) => {
-                        setNavigator(navigator);
-                    }}
-                />
-            </ApplicationProvider>
-        </AuthProvider>
+        <LocationProvider>
+            <AuthProvider>
+                <ApplicationProvider {...eva} theme={eva.dark}>
+                    <App
+                        ref={(navigator) => {
+                            setNavigator(navigator);
+                        }}
+                    />
+                </ApplicationProvider>
+            </AuthProvider>
+        </LocationProvider>
     );
 };
 
