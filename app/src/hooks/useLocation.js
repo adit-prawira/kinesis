@@ -5,6 +5,12 @@ import {
     watchPositionAsync,
 } from "expo-location";
 
+/**
+ *
+ * @param {boolean} shouldTrack
+ * @param {Function} callback
+ * @returns any error messages when generated every time location streaming experiencing an error
+ */
 export const useLocation = (shouldTrack, callback) => {
     const [error, setError] = useState(null);
 

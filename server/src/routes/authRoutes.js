@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const jwt = require("jsonwebtoken");
 
-router.post("/signup", async (req, res) => {
+router.post("/api/signup", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = new User({ email, password });
@@ -26,7 +26,7 @@ router.post("/signup", async (req, res) => {
     }
 });
 
-router.post("/signin", async (req, res) => {
+router.post("/api/signin", async (req, res) => {
     const { email, password } = req.body;
 
     // return early and send invalid data status code when the user trying to log in

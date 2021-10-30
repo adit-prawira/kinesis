@@ -1,12 +1,43 @@
 import createDataContext from "./createDataContext";
 import trackApi from "../api/trackApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SIGN_IN, SIGN_OUT, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./types";
+import { SIGN_IN, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./actionTypes";
 import { navigate } from "../navigationRef";
 import produce from "immer";
-// auth action functions
+
+const initialState = { token: null, errorMessage: "" };
+// authReducer
+const authReducer = produce((state = initialState, action) => {
+    switch (action.type) {
+        case SIGN_IN:
+            state.errorMessage = "";
+            state.token = action.payload;
+            return state;
+        case AUTH_ERROR:
+            state.errorMessage = action.payload;
+            return state;
+        case CLEAR_ERROR_MESSAGE:
+            state.errorMessage = "";
+            return state;
+        default:
+            return state;
+    }
+});
+
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will dispatch a sign up action by setting auth token as its payload
+ *          otherwise dispatch authentication error action and set error message as its payload
+ */
 const signUp =
     (dispatch) =>
+    /**
+     * Will create a request on accessing auth token by giving an existing and valid credentials
+     * in the database
+     * @param {string} email
+     * @param {string} password
+     */
     async ({ email, password }) => {
         try {
             // API request to sign up
@@ -30,8 +61,19 @@ const signUp =
         }
     };
 
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will dispatch a sign in action by setting auth token as its payload
+ *          otherwise dispatch authentication error action and set error message as its payload
+ */
 const signIn =
     (dispatch) =>
+    /**
+     * Will create a request on creating new user profile to the database
+     * @param {string} email
+     * @param {string} password
+     */
     async ({ email, password }) => {
         try {
             // API request to sign in
@@ -53,12 +95,24 @@ const signIn =
         }
     };
 
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will remove stored auth token from the AsyncStorage and navigate user
+ *          to Authentication screen
+ */
 const signOut = (dispatch) => async () => {
     // API request to sign out, might destroy jwt token
     await AsyncStorage.removeItem("token");
     navigate("SignUp");
 };
 
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will dispatch an action on to sign in automatically by getting an existing token
+ *          in AsyncStorage
+ */
 const autoLocalSignIn = (dispatch) => async () => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
@@ -69,28 +123,14 @@ const autoLocalSignIn = (dispatch) => async () => {
     }
 };
 
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will dispatch an action to reset/remove error messages
+ */
 const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: CLEAR_ERROR_MESSAGE });
 };
-
-const initialState = { token: null, errorMessage: "" };
-// authReducer
-const authReducer = produce((state = initialState, action) => {
-    switch (action.type) {
-        case SIGN_IN:
-            state.errorMessage = "";
-            state.token = action.payload;
-            return state;
-        case AUTH_ERROR:
-            state.errorMessage = action.payload;
-            return state;
-        case CLEAR_ERROR_MESSAGE:
-            state.errorMessage = "";
-            return state;
-        default:
-            return state;
-    }
-});
 
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer

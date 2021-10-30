@@ -51,13 +51,13 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                     value={email}
                     onChangeText={setEmail}
                     placeholder="Enter your email"
-                    accessoryLeft={
+                    accessoryLeft={() => (
                         <FontAwesomeIcon
                             name="user-circle-o"
                             size={24}
                             color="white"
                         />
-                    }
+                    )}
                 />
             </Spacer>
             <Spacer>
@@ -70,13 +70,13 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                     value={password}
                     onChangeText={setPassword}
                     placeholder="Enter your password"
-                    accessoryLeft={
+                    accessoryLeft={() => (
                         <IonIcon
                             name="ios-lock-closed"
                             size={24}
                             color="white"
                         />
-                    }
+                    )}
                     accessoryRight={showPasswordIcon}
                 />
             </Spacer>
@@ -84,15 +84,13 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                 <Text style={styles.error}>{errorMessage}</Text>
             ) : null}
             <Spacer>
-                
-                    <Button
-                        style={styles.button}
-                        appearance="outline"
-                        status="success"
-                        onPress={() => onSubmit({ email, password })}
-                    >
-                        {
-            screenTitle}
+                <Button
+                    style={styles.button}
+                    appearance="outline"
+                    status="success"
+                    onPress={() => onSubmit({ email, password })}
+                >
+                    {screenTitle}
                 </Button>
             </Spacer>
         </React.Fragment>

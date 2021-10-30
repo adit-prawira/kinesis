@@ -5,7 +5,7 @@ import {
     START_RECORDING,
     STOP_RECORDING,
     UPDATE_TRACK_NAME,
-} from "./types";
+} from "./actionTypes";
 import produce from "immer";
 
 const initialState = {

@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Button, Input } from "@ui-kitten/components";
-import { Icon } from "react-native-eva-icons";
 import Spacer from "../components/Spacer";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Context as LocationContext } from "../context/LocationContext";
+import { useSaveTrack } from "../hooks";
 const styles = StyleSheet.create({
     button: {
         textAlign: "center",
@@ -26,8 +26,12 @@ const StopRecordIcon = () => (
         size={24}
     />
 );
-const AddIcon = () => (
-    <MaterialIcons name="add-road" color="rgb(102, 220, 156)" size={24} />
+const AddIcon = ({ valid }) => (
+    <MaterialIcons
+        name="add-road"
+        color={valid ? "rgb(102, 220, 156)" : "rgb(116, 124, 146)"}
+        size={24}
+    />
 );
 const TrackForm = () => {
     const {
@@ -36,7 +40,7 @@ const TrackForm = () => {
         stopRecording,
         updateTrackName,
     } = useContext(LocationContext);
-
+    const [saveTrack] = useSaveTrack();
     return (
         <>
             <Spacer>
@@ -46,13 +50,13 @@ const TrackForm = () => {
                     autoCorrect={false}
                     value={name}
                     onChangeText={updateTrackName}
-                    accessoryLeft={
+                    accessoryLeft={() => (
                         <FontAwesomeIcon
                             size={24}
                             color="white"
                             name="pencil-square-o"
                         />
-                    }
+                    )}
                 />
             </Spacer>
             <Spacer>
@@ -74,11 +78,20 @@ const TrackForm = () => {
                     appearance="outline"
                     status="success"
                     size="small"
-                    accessoryLeft={AddIcon}
+                    accessoryLeft={() => (
+                        <AddIcon
+                            valid={
+                                !recording &&
+                                locations.length > 0 &&
+                                name.length > 0
+                            }
+                        />
+                    )}
                     style={styles.button}
                     disabled={
                         !(!recording && locations.length > 0 && name.length > 0)
                     }
+                    onPress={saveTrack}
                 >
                     Add New Track
                 </Button>
