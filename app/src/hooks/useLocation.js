@@ -7,37 +7,41 @@ import {
 
 export const useLocation = (shouldTrack, callback) => {
     const [error, setError] = useState(null);
-    const [subscriber, setSubscriber] = useState(null);
-    const startWatching = async () => {
-        try {
-            const { granted } = await requestForegroundPermissionsAsync();
-            if (!granted) {
-                throw new Error("Location permission not granted");
-            }
-
-            const sub = await watchPositionAsync(
-                {
-                    accuracy: Accuracy.BestForNavigation,
-                    timeInterval: 1000, // update once every second
-                    distanceInterval: 10, // update once every 10 meters
-                },
-                callback
-            );
-            setSubscriber(sub);
-        } catch (e) {
-            setError(e);
-        }
-    };
 
     useEffect(() => {
+        let subscriber;
+        const startWatching = async () => {
+            try {
+                const { granted } = await requestForegroundPermissionsAsync();
+                if (!granted) {
+                    throw new Error("Location permission not granted");
+                }
+                subscriber = await watchPositionAsync(
+                    {
+                        accuracy: Accuracy.BestForNavigation,
+                        timeInterval: 1000, // update once every second
+                        distanceInterval: 10, // update once every 10 meters
+                    },
+                    callback
+                );
+            } catch (e) {
+                setError(e);
+            }
+        };
+
         if (shouldTrack) {
-            startWatching(); // start watching/tracking when user is currently on map screen and is recording
+            // start watching/tracking when user is currently on map screen and is recording
+            startWatching();
         } else {
             // stop watching/tracking otherwise
-            subscriber.remove();
-            setSubscriber(null);
+            if (subscriber) subscriber.remove();
+            subscriber = null;
         }
-    }, [shouldTrack]);
+        return () => {
+            // only calling this when subscriber id defined/startWatching is active
+            if (subscriber) subscriber.remove();
+        };
+    }, [shouldTrack, callback]);
 
     return [error];
 };

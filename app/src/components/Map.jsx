@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
 
 const Map = () => {
     const {
-        state: { currentLocation },
+        state: { currentLocation, locations },
     } = useContext(LocationContext);
-    console.log(currentLocation);
+
     if (!currentLocation) {
         return (
             <ActivityIndicator size="large" style={styles.activityIndicator} />
@@ -36,6 +36,11 @@ const Map = () => {
                 latitudeDelta: 0.01,
             }}
         >
+            <Polyline
+                coordinates={locations.map(({ coords }) => coords)}
+                strokeWidth={2}
+                strokeColor="rgba(64, 99, 201,0.7)"
+            />
             <Circle
                 center={currentLocation.coords}
                 radius={20}

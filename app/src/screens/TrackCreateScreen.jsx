@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { Text, StyleSheet } from "react-native";
 import {
     SafeAreaView,
@@ -6,11 +6,9 @@ import {
     withNavigationFocus,
 } from "react-navigation";
 import Map from "../components/Map";
-import { Button, Layout } from "@ui-kitten/components";
 import { Context as LocationContext } from "../context/LocationContext";
-import { Icon } from "react-native-eva-icons";
 import { useLocation } from "../hooks";
-
+import TrackForm from "../components/TrackForm";
 // import "../_mockLocation";
 const styles = StyleSheet.create({
     container: {
@@ -26,31 +24,23 @@ const styles = StyleSheet.create({
         color: "rgb(236, 102, 101)",
     },
     title: { fontSize: 20, textAlign: "center", color: "white", margin: "2%" },
-    button: {
-        margin:"2%",
-        textAlign: "center",
-    },
 });
 
-export const StartRecordIcon = () => (
-    <Icon
-        name="play-circle-outline"
-        fill="rgb(233, 79, 144)"
-        width={24}
-        height={24}
-    />
-);
-export const AddIcon = () => (
-    <Icon
-        name="plus-outline"
-        fill="rgb(102, 220, 156)"
-        width={24}
-        height={24}
-    />
-);
 const TrackCreateScreen = ({ isFocused }) => {
-    const { addLocation } = useContext(LocationContext);
-    const [error] = useLocation(isFocused, addLocation);
+    const {
+        state: { recording },
+        addLocation,
+    } = useContext(LocationContext);
+    const callback = useCallback(
+        (location) => {
+            addLocation(location, recording);
+        },
+        [recording]
+    );
+
+    // should record any position changes whenever ur is currently in the create track screen or
+    // the user already pressed the recording button
+    const [error] = useLocation(isFocused || recording, callback);
 
     return (
         <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
@@ -62,24 +52,7 @@ const TrackCreateScreen = ({ isFocused }) => {
                     Please enable location services
                 </Text>
             )}
-            <Layout>
-                <Button
-                    appearance="outline"
-                    status="danger"
-                    accessoryLeft={StartRecordIcon}
-                    style={styles.button}
-                >
-                    Record Track
-                </Button>
-                <Button
-                    appearance="outline"
-                    status="success"
-                    accessoryLeft={AddIcon}
-                    style={styles.button}
-                >
-                    Add New Track
-                </Button>
-            </Layout>
+            <TrackForm />
         </SafeAreaView>
     );
 };

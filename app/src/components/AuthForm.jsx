@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Input, Text } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { Button } from "@ui-kitten/components";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { Text, Input, Button } from "@ui-kitten/components";
 import Spacer from "./Spacer.jsx";
 const styles = StyleSheet.create({
     title: {
@@ -15,10 +15,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: "5%",
     },
-    button: {
-        marginLeft: "5%",
-        marginRight: "5%",
-    },
+
     input: {
         color: "white",
     },
@@ -27,7 +24,19 @@ const styles = StyleSheet.create({
 const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [secureTextEntry, setSecureTextEntry] = useState(true);
+    const showPasswordIcon = () => (
+        <TouchableWithoutFeedback
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
+        >
+            <IonIcon
+                name={secureTextEntry ? "eye-off-outline" : "eye-outline"}
+                size={24}
+                color="white"
+                style={{ marginRight: "5%" }}
+            />
+        </TouchableWithoutFeedback>
+    );
     return (
         <React.Fragment>
             <Spacer>
@@ -38,16 +47,15 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                     style={styles.input}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    label="Email:"
+                    label={<Text>Email Address:</Text>}
                     value={email}
                     onChangeText={setEmail}
                     placeholder="Enter your email"
-                    leftIcon={
-                        <Icon
-                            name="user"
+                    accessoryLeft={
+                        <FontAwesomeIcon
+                            name="user-circle-o"
                             size={24}
-                            color="grey"
-                            style={{ marginRight: "5%" }}
+                            color="white"
                         />
                     }
                 />
@@ -57,32 +65,36 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                     style={styles.input}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    secureTextEntry
-                    label="Password:"
+                    secureTextEntry={secureTextEntry}
+                    label={<Text>Password:</Text>}
                     value={password}
                     onChangeText={setPassword}
                     placeholder="Enter your password"
-                    leftIcon={
-                        <Icon
-                            name="lock"
+                    accessoryLeft={
+                        <IonIcon
+                            name="ios-lock-closed"
                             size={24}
-                            color="grey"
-                            style={{ marginRight: "5%" }}
+                            color="white"
                         />
                     }
+                    accessoryRight={showPasswordIcon}
                 />
             </Spacer>
             {errorMessage ? (
                 <Text style={styles.error}>{errorMessage}</Text>
             ) : null}
-            <Button
-                style={styles.button}
-                appearance="outline"
-                status="success"
-                onPress={() => onSubmit({ email, password })}
-            >
-                {screenTitle}
-            </Button>
+            <Spacer>
+                
+                    <Button
+                        style={styles.button}
+                        appearance="outline"
+                        status="success"
+                        onPress={() => onSubmit({ email, password })}
+                    >
+                        {
+            screenTitle}
+                </Button>
+            </Spacer>
         </React.Fragment>
     );
 };
