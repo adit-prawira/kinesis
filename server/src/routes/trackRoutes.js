@@ -10,7 +10,6 @@ router.use(requireAuth);
 router.get("/api/tracks", async (req, res) => {
     // find all tracks owned by the logged in user and find id by user's id
     const tracks = await Track.find({ userId: req.user._id });
-
     res.send(tracks);
 });
 

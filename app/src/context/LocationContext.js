@@ -5,6 +5,7 @@ import {
     START_RECORDING,
     STOP_RECORDING,
     UPDATE_TRACK_NAME,
+    RESET_TRACK_FORM,
 } from "./actionTypes";
 import produce from "immer";
 
@@ -31,6 +32,9 @@ const locationReducer = produce((state = initialState, action) => {
             return state;
         case UPDATE_TRACK_NAME:
             state.name = action.payload;
+            return state;
+        case RESET_TRACK_FORM:
+            state = { ...initialState, currentLocation: state.currentLocation };
             return state;
         default:
             return state;
@@ -93,6 +97,15 @@ const addLocation =
         }
     };
 
+/**
+ *
+ * @param {Function} dispatch
+ * @returns a function that will dispatch an action to reset the track create form
+ */
+const resetTrackForm = (dispatch) => () => {
+    dispatch({ type: RESET_TRACK_FORM });
+};
+
 export const { Context, Provider } = createDataContext(
     locationReducer,
     {
@@ -100,6 +113,7 @@ export const { Context, Provider } = createDataContext(
         stopRecording,
         addLocation,
         updateTrackName,
+        resetTrackForm,
     },
     initialState
 );

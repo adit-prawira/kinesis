@@ -6,7 +6,7 @@ const trackApi = axios.create({
 trackApi.interceptors.request.use(
     async (config) => {
         const token = await AsyncStorage.getItem("token");
-        config.headers.Authorization = token ? `Bearer ${token}` : "";
+        if (token) config.headers.Authorization = `Bearer ${token}`;
         return config;
     },
     (err) => new Promise.reject(err)
