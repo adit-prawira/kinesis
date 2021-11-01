@@ -5,6 +5,9 @@ const startApp = async () => {
     if (process.env.NODE_ENV !== "production") {
         require("dotenv").config();
     }
+    if (!process.env.JWT_KEY) {
+        throw new Error("JWT KEYT must be defined");
+    }
     if (!process.env.DB_URL) {
         throw new Error("DB URL must be defined");
     }
@@ -17,7 +20,9 @@ const startApp = async () => {
     const PORT = process.env.PORT ? process.env.PORT : 5000;
 
     app.listen(PORT, () => {
-        console.log("KINESIS BACKEND STATUS: Server is listening to PORT 3000");
+        console.log(
+            `KINESIS BACKEND STATUS: Server is listening to PORT ${PORT}`
+        );
     });
 };
 startApp();
