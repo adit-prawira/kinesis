@@ -40,6 +40,7 @@ const Map = () => {
                 coordinates={locations.map(({ coords }) => coords)}
                 strokeWidth={2}
                 strokeColor="rgba(64, 99, 201,0.7)"
+                lineDashPattern={[1]}
             />
             <Circle
                 center={currentLocation.coords}
