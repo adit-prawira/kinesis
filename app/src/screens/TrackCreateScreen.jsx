@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: "1%",
-        backgroundColor: "rgb(36, 42, 67)",
+        backgroundColor: "rgb(45, 48, 65)",
     },
     button: {
         marginRight: "5%",
@@ -23,7 +23,13 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: "rgb(236, 102, 101)",
     },
-    title: { fontSize: 20, textAlign: "center", color: "white", margin: "2%" },
+    title: {
+        fontSize: 20,
+        textAlign: "center",
+        color: "white",
+        marginTop: "10%",
+        marginBottom: "3%",
+    },
 });
 
 const TrackCreateScreen = ({ isFocused }) => {
@@ -38,7 +44,7 @@ const TrackCreateScreen = ({ isFocused }) => {
         [recording]
     );
 
-    // should record any position changes whenever ur is currently in the create track screen or
+    // should record any position changes whenever user is currently in the create track screen or
     // the user already pressed the recording button
     const [error] = useLocation(isFocused || recording, callback);
 
@@ -57,15 +63,4 @@ const TrackCreateScreen = ({ isFocused }) => {
     );
 };
 
-TrackCreateScreen.navigationOptions = () => {
-    return {
-        title: "Create New Track",
-        headerTitleStyle: {
-            color: "white",
-        },
-        headerStyle: {
-            backgroundColor: "rgb(28, 34, 54)",
-        },
-    };
-};
 export default withNavigationFocus(TrackCreateScreen);

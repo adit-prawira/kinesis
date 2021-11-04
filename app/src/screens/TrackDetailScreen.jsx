@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: "1%",
-        backgroundColor: "rgb(36, 42, 67)",
+        backgroundColor: "rgb(45, 48, 65)",
     },
     button: {
         marginRight: "5%",

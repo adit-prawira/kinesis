@@ -24,14 +24,24 @@ const switchNavigator = createSwitchNavigator({
         SignUp: SignUpScreen,
         SignIn: SignInScreen,
     }),
-    mainFlow: createBottomTabNavigator({
-        Tracks: createStackNavigator({
-            List: TrackListScreen,
-            Detail: TrackDetailScreen,
-        }),
-        Create: TrackCreateScreen,
-        Account: AccountScreen,
-    }),
+    mainFlow: createBottomTabNavigator(
+        {
+            Tracks: createStackNavigator({
+                List: TrackListScreen,
+                Detail: TrackDetailScreen,
+            }),
+            Create: TrackCreateScreen,
+            Account: AccountScreen,
+        },
+        {
+            tabBarOptions: {
+                style: {
+                    backgroundColor: "rgb(33, 34, 48)",
+                },
+                activeTintColor: "white",
+            },
+        }
+    ),
 });
 
 const App = createAppContainer(switchNavigator);

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         padding: "1%",
-        backgroundColor: "rgb(36, 42, 67)",
+        backgroundColor: "rgb(45, 48, 65)",
     },
 });
 

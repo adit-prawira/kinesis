@@ -15,8 +15,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: "1%",
-        backgroundColor: "rgb(36, 42, 67)",
+        backgroundColor: "rgb(45, 48, 65)",
     },
+    list: {
+        borderRadius: 5,
+        elevation: 3,
+    },
+    divider: { backgroundColor: "rgb(78,79,90)" },
     button: {
         marginRight: "5%",
         marginLeft: "5%",
@@ -63,6 +68,7 @@ const TrackListScreen = ({ navigation }) => {
                     View Details
                 </Button>
             )}
+            style={styles.list}
         />
     );
     return (
@@ -73,7 +79,9 @@ const TrackListScreen = ({ navigation }) => {
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}
                     data={tracks}
-                    ItemSeparatorComponent={() => <Divider />}
+                    ItemSeparatorComponent={() => (
+                        <Divider style={styles.divider} />
+                    )}
                     renderItem={renderListItem}
                 />
             ) : (
@@ -88,9 +96,10 @@ TrackListScreen.navigationOptions = () => {
         title: "Tracks",
         headerTitleStyle: {
             color: "white",
+            textAlign: "center",
         },
         headerStyle: {
-            backgroundColor: "rgb(28, 34, 54)",
+            backgroundColor: "rgb(45, 48, 65)",
         },
     };
 };
