@@ -1,16 +1,26 @@
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { Button, Input } from "@ui-kitten/components";
+import { Button, Input, Card, Layout, Text } from "@ui-kitten/components";
 import Spacer from "../components/Spacer";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
 import { Context as LocationContext } from "../context/LocationContext";
+import TouchableIcon from "./TouchableIcon";
 import { useSaveTrack } from "../hooks";
+
 const styles = StyleSheet.create({
     button: {
         textAlign: "center",
     },
+    container: {
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
+        flexDirection: "row",
+    },
+    title: { margin: "2%" },
 });
 const StartRecordIcon = () => (
     <MaterialCommunityIcons
@@ -58,6 +68,33 @@ const TrackForm = () => {
                         />
                     )}
                 />
+            </Spacer>
+
+            <Spacer>
+                <Card
+                    style={styles.item}
+                    status="basic"
+                    header={() => (
+                        <Text style={styles.title}>Choose Activity:</Text>
+                    )}
+                    status="success"
+                >
+                    <Layout style={styles.container} level="1">
+                        <TouchableIcon icon={Fontisto} name="bicycle" />
+                        <TouchableIcon
+                            icon={MaterialIcons}
+                            name="directions-walk"
+                        />
+                        <TouchableIcon
+                            icon={MaterialCommunityIcons}
+                            name="run"
+                        />
+                        <TouchableIcon
+                            icon={MaterialCommunityIcons}
+                            name="run-fast"
+                        />
+                    </Layout>
+                </Card>
             </Spacer>
             <Spacer>
                 <Button

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import {
     Button,
     List,
@@ -72,7 +72,7 @@ const TrackListScreen = ({ navigation }) => {
         />
     );
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <NavigationEvents onWillFocus={getTracks} />
             {tracks.length > 0 ? (
                 <List
@@ -87,20 +87,13 @@ const TrackListScreen = ({ navigation }) => {
             ) : (
                 <Spinner status="success" />
             )}
-        </View>
+        </SafeAreaView>
     );
 };
 
 TrackListScreen.navigationOptions = () => {
     return {
-        title: "Tracks",
-        headerTitleStyle: {
-            color: "white",
-            textAlign: "center",
-        },
-        headerStyle: {
-            backgroundColor: "rgb(45, 48, 65)",
-        },
+        headerShown: false,
     };
 };
 

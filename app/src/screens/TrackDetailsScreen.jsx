@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const TrackDetailScreen = () => {
+const TrackDetailsScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 24, color: "white" }}>
@@ -27,15 +27,9 @@ const TrackDetailScreen = () => {
         </View>
     );
 };
-TrackDetailScreen.navigationOptions = () => {
+TrackDetailsScreen.navigationOptions = () => {
     return {
-        title: "Track Details Preview",
-        headerTitleStyle: {
-            color: "white",
-        },
-        headerStyle: {
-            backgroundColor: "rgb(28, 34, 54)",
-        },
+        headerShown: false,
     };
 };
-export default TrackDetailScreen;
+export default TrackDetailsScreen;

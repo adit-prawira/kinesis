@@ -1,10 +1,6 @@
 import React, { useContext, useCallback } from "react";
-import { Text, StyleSheet } from "react-native";
-import {
-    SafeAreaView,
-    NavigationEvents,
-    withNavigationFocus,
-} from "react-navigation";
+import { Text, StyleSheet, ScrollView } from "react-native";
+import { NavigationEvents, withNavigationFocus } from "react-navigation";
 import Map from "../components/Map";
 import { Context as LocationContext } from "../context/LocationContext";
 import { useLocation } from "../hooks";
@@ -13,7 +9,8 @@ import TrackForm from "../components/TrackForm";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: "1%",
+        padding: "2%",
+        marginBottom: "5%",
         backgroundColor: "rgb(45, 48, 65)",
     },
     button: {
@@ -27,8 +24,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: "center",
         color: "white",
-        marginTop: "10%",
-        marginBottom: "3%",
     },
 });
 
@@ -49,8 +44,7 @@ const TrackCreateScreen = ({ isFocused }) => {
     const [error] = useLocation(isFocused || recording, callback);
 
     return (
-        <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
-            <Text style={styles.title}>Create New Track</Text>
+        <ScrollView style={styles.container}>
             <Map />
             <NavigationEvents onWillBlur={() => console.log("leaving")} />
             {error && (
@@ -59,7 +53,7 @@ const TrackCreateScreen = ({ isFocused }) => {
                 </Text>
             )}
             <TrackForm />
-        </SafeAreaView>
+        </ScrollView>
     );
 };
 

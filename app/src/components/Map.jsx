@@ -5,6 +5,7 @@ import { Context as LocationContext } from "../context/LocationContext";
 const styles = StyleSheet.create({
     map: {
         height: 300,
+        borderRadius: 5,
     },
     activityIndicator: {
         marginTop: 200,
