@@ -46,7 +46,7 @@ const TrackCreateScreen = ({ isFocused }) => {
     return (
         <ScrollView style={styles.container}>
             <Map />
-            <NavigationEvents onWillBlur={() => console.log("leaving")} />
+            <NavigationEvents />
             {error && (
                 <Text style={styles.errorMessage}>
                     Please enable location services

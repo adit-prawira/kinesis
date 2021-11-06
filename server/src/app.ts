@@ -8,6 +8,8 @@ import {
     currentUserRouter,
     signUpRouter,
     signInRouter,
+    deleteAccountRouter,
+    updateAccountRouter,
 } from "./routes/auth-routes";
 const app = express();
 app.set("trust proxy", true);
@@ -17,6 +19,9 @@ app.use(json());
 app.use(currentUserRouter);
 app.use(signUpRouter);
 app.use(signInRouter);
+app.use(deleteAccountRouter);
+app.use(updateAccountRouter);
+
 app.all("*", async () => {
     throw new NotFoundError();
 });

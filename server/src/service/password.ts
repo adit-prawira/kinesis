@@ -10,7 +10,6 @@ export class Password {
      */
     static async toHash(password: string) {
         const salt = randomBytes(8).toString("hex"); // generate salt
-
         const buffer = (await scryptAsync(password, salt, 64)) as Buffer; // perform password hashing
         return `${buffer.toString("hex")}.${salt}`;
     }
