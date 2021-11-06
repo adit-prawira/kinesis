@@ -5,7 +5,7 @@ router.get(
     "/api/users/currentuser",
     requireAuth,
     (req: Request, res: Response) => {
-        res.send({ currentUser: req.currentUser || null });
+        res.status(200).send({ currentUser: req.currentUser || null });
     }
 );
 export { router as currentUserRouter };

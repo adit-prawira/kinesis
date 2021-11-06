@@ -4,6 +4,7 @@ import { validateRequest, requireAuth } from "../../middlewares";
 import { BadRequestError, DataBaseConnectionError } from "../../errors";
 import { Password } from "../../service";
 import { User } from "../../models";
+
 const router = express.Router();
 
 router.put(
@@ -24,8 +25,27 @@ router.put(
     async (req: Request, res: Response) => {
         const targetUserId = req.currentUser!.id;
         const newDetails = req.body;
-        await User.findByIdAndUpdate(targetUserId, { ...newDetails });
-        res.status(204).send({});
+        let existingUser;
+
+        try {
+            existingUser = await User.findOne({
+                email: newDetails.email,
+                _id: { $ne: targetUserId },
+            });
+        } catch (err) {
+            throw new DataBaseConnectionError();
+        }
+
+        if (existingUser) {
+            throw new BadRequestError("Email has already been used");
+        }
+
+        try {
+            await User.findByIdAndUpdate(targetUserId, { ...newDetails });
+            res.status(204).send({});
+        } catch (err) {
+            throw new DataBaseConnectionError();
+        }
     }
 );
 
@@ -41,13 +61,17 @@ router.put(
     ],
     validateRequest,
     async (req: Request, res: Response) => {
-        const targetUserId = req.currentUser!.id;
-        const { password: newPassword } = req.body;
-        const newHashedPassword = await Password.toHash(newPassword);
-        await User.findByIdAndUpdate(targetUserId, {
-            password: newHashedPassword,
-        });
-        res.status(204).send({});
+        try {
+            const targetUserId = req.currentUser!.id;
+            const { password: newPassword } = req.body;
+            const newHashedPassword = await Password.toHash(newPassword);
+            await User.findByIdAndUpdate(targetUserId, {
+                password: newHashedPassword,
+            });
+            res.status(204).send({});
+        } catch (err) {
+            throw new DataBaseConnectionError();
+        }
     }
 );
 export { router as updateAccountRouter };

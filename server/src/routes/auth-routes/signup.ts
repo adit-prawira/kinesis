@@ -42,7 +42,7 @@ router.post(
                 },
                 process.env.JWT_KEY!
             );
-            res.send({ token });
+            res.status(201).send({ token });
         } catch (err) {
             throw new DataBaseConnectionError();
         }
