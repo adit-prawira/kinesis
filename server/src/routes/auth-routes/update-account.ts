@@ -25,6 +25,7 @@ router.put(
     async (req: Request, res: Response) => {
         const targetUserId = req.currentUser!.id;
         const newDetails = req.body;
+
         let existingUser;
 
         try {
@@ -41,7 +42,11 @@ router.put(
         }
 
         try {
-            await User.findByIdAndUpdate(targetUserId, { ...newDetails });
+            const dateUpdated = new Date().toLocaleDateString();
+            await User.findByIdAndUpdate(targetUserId, {
+                ...newDetails,
+                dateUpdated,
+            });
             res.status(204).send({});
         } catch (err) {
             throw new DataBaseConnectionError();
@@ -65,8 +70,10 @@ router.put(
             const targetUserId = req.currentUser!.id;
             const { password: newPassword } = req.body;
             const newHashedPassword = await Password.toHash(newPassword);
+            const dateUpdated = new Date().toLocaleDateString();
             await User.findByIdAndUpdate(targetUserId, {
                 password: newHashedPassword,
+                dateUpdated,
             });
             res.status(204).send({});
         } catch (err) {

@@ -9,6 +9,8 @@ interface UserAttributes {
     age: number;
     email: string;
     password: string;
+    dateCreated: string;
+    dateUpdated: string;
 }
 
 /**
@@ -20,6 +22,7 @@ interface UserDocument extends mongoose.Document {
     email: string;
     password: string;
     dateCreated: string;
+    dateUpdated: string;
 }
 
 /**
@@ -39,6 +42,8 @@ const userSchema = new mongoose.Schema(
         age: { type: Number, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
+        dateCreated: { type: String, required: true },
+        dateUpdated: { type: String, required: true },
     },
     {
         toJSON: {

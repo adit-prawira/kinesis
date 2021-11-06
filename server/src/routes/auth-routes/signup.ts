@@ -25,14 +25,23 @@ router.post(
     async (req: Request, res: Response) => {
         const { email, password, username, age } = req.body;
         const existingUser = await User.findOne({ email });
-
+        const date = new Date().toLocaleDateString();
+        const dateCreated = date;
+        const dateUpdated = date;
         // Send BadRequestError when creating an account with an email that already exist
         if (existingUser) {
             throw new BadRequestError("Email has already been used");
         }
 
         try {
-            const user = await User.build({ username, age, email, password });
+            const user = await User.build({
+                username,
+                age,
+                email,
+                password,
+                dateCreated,
+                dateUpdated,
+            });
             await user.save();
 
             // generate JWT token for user
