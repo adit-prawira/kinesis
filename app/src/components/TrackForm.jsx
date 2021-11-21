@@ -8,7 +8,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { Context as LocationContext } from "../context/LocationContext";
 import { useSaveTrack } from "../hooks";
-import { Stopwatch } from "react-native-stopwatch-timer";
+import Stopwatch from "./Stopwatch";
 
 const styles = StyleSheet.create({
     button: {
@@ -74,21 +74,6 @@ const metDataList = [
         selected: false,
     },
 ];
-const timerOptions = {
-    container: {
-        backgroundColor: "rgb(35, 42, 67)",
-        borderColor: "black",
-        borderWidth: "1px",
-        padding: 10,
-        borderRadius: 5,
-        width: "100%",
-        alignItems: "center",
-    },
-    text: {
-        fontSize: 40,
-        color: "white",
-    },
-};
 
 const TrackForm = () => {
     const {
@@ -99,11 +84,9 @@ const TrackForm = () => {
         setMetLevel,
     } = useContext(LocationContext);
     const [saveTrack] = useSaveTrack();
-    const [resetStopwatch, setResetStopwatch] = useState(false);
-    const [time, setTime] = useState("");
     const [metData, setMetData] = useState(metDataList);
-
-    const handleResetStopwatch = () => setResetStopwatch(true);
+    const [reset, setReset] = useState(false);
+    const handleReset = () => setReset(true);
     const handleChooseMet = (value) => {
         let copy = metDataList.map((item) => {
             if (item.name === value.name) {
@@ -114,14 +97,6 @@ const TrackForm = () => {
         setMetLevel(value.level);
         setMetData(copy);
     };
-    useEffect(() => {
-        if (resetStopwatch) {
-            const timer = setTimeout(() => {
-                setResetStopwatch(false);
-            }, 1000);
-            return () => clearTimeout(timer);
-        }
-    }, [resetStopwatch]);
 
     return (
         <>
@@ -142,13 +117,7 @@ const TrackForm = () => {
                 />
             </Spacer>
             <Spacer>
-                <Stopwatch
-                    laps
-                    start={recording}
-                    getTime={setTime}
-                    options={timerOptions}
-                    reset={resetStopwatch}
-                />
+                <Stopwatch recording={recording} reset={reset} />
             </Spacer>
             <Spacer>
                 <Card
@@ -204,9 +173,7 @@ const TrackForm = () => {
                         !recording ? StartRecordIcon : StopRecordIcon
                     }
                     style={styles.button}
-                    onPress={
-                        !recording ? startRecording : () => stopRecording(time)
-                    }
+                    onPress={!recording ? startRecording : stopRecording}
                 >
                     {!recording ? "Start Recording" : "Stop Recording"}
                 </Button>
@@ -232,7 +199,7 @@ const TrackForm = () => {
                     }
                     onPress={async () => {
                         await saveTrack();
-                        handleResetStopwatch();
+                        handleReset();
                     }}
                 >
                     Add New Track

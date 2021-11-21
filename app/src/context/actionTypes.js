@@ -13,7 +13,7 @@ export const STOP_RECORDING = "STOP_RECORDING";
 export const UPDATE_TRACK_NAME = "UPDATE_TRACK_NAME";
 export const RESET_TRACK_FORM = "RESET_TRACK_FORM";
 export const SET_MET_LEVEL = "SET_MET_LEVEL";
-
+export const SET_TIME_RECORDED = "SET_TIME_RECORDED";
 /******************************* TRACK ACTIONS TYPES *******************************/
 export const GET_TRACKS = "GET_TRACKS";
 export const GET_TRACK = "GET_TRACK";

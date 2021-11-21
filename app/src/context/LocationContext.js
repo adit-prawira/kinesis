@@ -7,6 +7,7 @@ import {
     UPDATE_TRACK_NAME,
     RESET_TRACK_FORM,
     SET_MET_LEVEL,
+    SET_TIME_RECORDED,
 } from "./actionTypes";
 import produce from "immer";
 
@@ -28,15 +29,16 @@ const locationReducer = produce((state = initialState, action) => {
             state.recording = true;
             return state;
         case STOP_RECORDING:
-            const totalTimeSeconds = action.payload;
             state.recording = false;
-            state.timeRecorded = totalTimeSeconds;
             return state;
         case ADD_LOCATION:
             state.locations.push(action.payload);
             return state;
         case SET_MET_LEVEL:
             state.met = action.payload;
+            return state;
+        case SET_TIME_RECORDED:
+            state.timeRecorded = action.payload;
             return state;
         case UPDATE_TRACK_NAME:
             state.name = action.payload;
@@ -69,16 +71,13 @@ const stopRecording =
      *
      * @param {string} time a time string with form of hours:minutes:seconds
      */
-    (time) => {
-        const timeString = time.split(":");
-        const hoursToSeconds = timeString[0] * 60 * 60;
-        const minutesToSeconds = timeString[1] * 60;
-        const seconds = timeString[2] * 1;
-        const totalSeconds = hoursToSeconds + minutesToSeconds + seconds;
-
-        dispatch({ type: STOP_RECORDING, payload: totalSeconds });
+    () => {
+        dispatch({ type: STOP_RECORDING });
     };
 
+const setTimeRecorded = (dispatch) => (time) => {
+    dispatch({ type: SET_TIME_RECORDED, payload: time });
+};
 /**
  *
  * @param {Function} dispatch
@@ -139,6 +138,7 @@ export const { Context, Provider } = createDataContext(
         updateTrackName,
         resetTrackForm,
         setMetLevel,
+        setTimeRecorded,
     },
     initialState
 );
