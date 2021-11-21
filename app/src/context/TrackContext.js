@@ -44,7 +44,7 @@ const getTracks = (dispatch) => async () => {
 const getTrack = (dispatch) => async (trackId) => {};
 
 const createTrack = (dispatch) => async (formValues) => {
-    await trackApi.post("/tracks", formValues);
+    await trackApi.post("/tracks/new", formValues);
 };
 const updateTrack = (dispatch) => async (updatedFormValues) => {};
 const deleteTrack = (dispatch) => async (trackId) => {};

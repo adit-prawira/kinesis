@@ -5,11 +5,11 @@ import { navigate } from "../navigationRef";
 export const useSaveTrack = () => {
     const { createTrack } = useContext(TrackContext);
     const {
-        state: { locations, name },
+        state: { locations, name, met, timeRecorded },
         resetTrackForm,
     } = useContext(LocationContext);
     const saveTrack = async () => {
-        await createTrack({ name, locations });
+        await createTrack({ name, locations, met, timeRecorded });
         resetTrackForm(); // reset track create form
         navigate("List");
     };

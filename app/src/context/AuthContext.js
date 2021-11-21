@@ -41,7 +41,10 @@ const signUp =
     async ({ email, password }) => {
         try {
             // API request to sign up
-            const res = await trackApi.post("/signup", { email, password });
+            const res = await trackApi.post("/users/signup", {
+                email,
+                password,
+            });
             const token = res.data.token;
 
             // If signed up => modify the state that the user is authenticated => store tosken in storage
@@ -77,7 +80,10 @@ const signIn =
     async ({ email, password }) => {
         try {
             // API request to sign in
-            const res = await trackApi.post("/signin", { email, password });
+            const res = await trackApi.post("/users/signin", {
+                email,
+                password,
+            });
             const token = res.data.token;
 
             // If signed in => modify the state that the user is authenticated

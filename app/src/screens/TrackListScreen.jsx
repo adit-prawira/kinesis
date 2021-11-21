@@ -41,7 +41,7 @@ const TrackListScreen = ({ navigation }) => {
     const renderListItem = ({ item, index }) => (
         <ListItem
             title={`${item.name} `}
-            description={`Date Created:${new Date().toLocaleDateString()}`}
+            description={`Date Created:${item.dateCreated}`}
             accessoryLeft={() => (
                 <MaterialCommunityIcons
                     name="map-marker-distance"

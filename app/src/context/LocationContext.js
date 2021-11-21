@@ -6,11 +6,14 @@ import {
     STOP_RECORDING,
     UPDATE_TRACK_NAME,
     RESET_TRACK_FORM,
+    SET_MET_LEVEL,
 } from "./actionTypes";
 import produce from "immer";
 
 const initialState = {
     name: "",
+    met: 0,
+    timeRecorded: 0,
     recording: false,
     locations: [],
     currentLocation: null,
@@ -25,10 +28,15 @@ const locationReducer = produce((state = initialState, action) => {
             state.recording = true;
             return state;
         case STOP_RECORDING:
+            const totalTimeSeconds = action.payload;
             state.recording = false;
+            state.timeRecorded = totalTimeSeconds;
             return state;
         case ADD_LOCATION:
             state.locations.push(action.payload);
+            return state;
+        case SET_MET_LEVEL:
+            state.met = action.payload;
             return state;
         case UPDATE_TRACK_NAME:
             state.name = action.payload;
@@ -55,9 +63,21 @@ const startRecording = (dispatch) => () => {
  * @param {Function} dispatch
  * @returns a function that will dispatch an action that will toggle recording piece of state to false
  */
-const stopRecording = (dispatch) => () => {
-    dispatch({ type: STOP_RECORDING });
-};
+const stopRecording =
+    (dispatch) =>
+    /**
+     *
+     * @param {string} time a time string with form of hours:minutes:seconds
+     */
+    (time) => {
+        const timeString = time.split(":");
+        const hoursToSeconds = timeString[0] * 60 * 60;
+        const minutesToSeconds = timeString[1] * 60;
+        const seconds = timeString[2] * 1;
+        const totalSeconds = hoursToSeconds + minutesToSeconds + seconds;
+
+        dispatch({ type: STOP_RECORDING, payload: totalSeconds });
+    };
 
 /**
  *
@@ -97,6 +117,10 @@ const addLocation =
         }
     };
 
+const setMetLevel = (dispatch) => async (metLevel) => {
+    dispatch({ type: SET_MET_LEVEL, payload: metLevel });
+};
+
 /**
  *
  * @param {Function} dispatch
@@ -114,6 +138,7 @@ export const { Context, Provider } = createDataContext(
         addLocation,
         updateTrackName,
         resetTrackForm,
+        setMetLevel,
     },
     initialState
 );
