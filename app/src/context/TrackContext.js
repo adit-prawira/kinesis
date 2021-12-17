@@ -1,29 +1,16 @@
 import produce from "immer";
 import createDataContext from "./createDataContext";
-import {
-    GET_TRACK,
-    GET_TRACKS,
-    CREATE_TRACK,
-    UPDATE_TRACK,
-    DELETE_TRACK,
-    ALERT_ERROR,
-} from "./actionTypes";
+import { GET_TRACKS, CREATE_TRACK, ALERT_ERROR } from "./actionTypes";
 import trackApi from "../api/trackApi";
 
 const initialState = { tracks: [], error: null, success: null };
 
 const trackReducer = produce((state = initialState, action) => {
     switch (action.type) {
-        case GET_TRACK:
-            return state;
         case GET_TRACKS:
             state.tracks = action.payload;
             return state;
         case CREATE_TRACK:
-            return state;
-        case UPDATE_TRACK:
-            return state;
-        case DELETE_TRACK:
             return state;
         case ALERT_ERROR:
             return state;
@@ -41,16 +28,12 @@ const getTracks = (dispatch) => async () => {
     }
 };
 
-const getTrack = (dispatch) => async (trackId) => {};
-
 const createTrack = (dispatch) => async (formValues) => {
     await trackApi.post("/tracks/new", formValues);
 };
-const updateTrack = (dispatch) => async (updatedFormValues) => {};
-const deleteTrack = (dispatch) => async (trackId) => {};
 
 export const { Provider, Context } = createDataContext(
     trackReducer,
-    { getTrack, getTracks, createTrack, updateTrack, deleteTrack },
+    { getTracks, createTrack },
     initialState
 );

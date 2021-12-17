@@ -6,6 +6,7 @@ import { setNavigator } from "./src/navigationRef";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as LocationProvider } from "./src/context/LocationContext";
 import { Provider as TrackProvider } from "./src/context/TrackContext";
+import { Provider as TrackDetailsProvider } from "./src/context/TrackDetailsContext";
 import AccountScreen from "./src/screens/AccountScreen.jsx";
 import SignInScreen from "./src/screens/SignInScreen.jsx";
 import SignUpScreen from "./src/screens/SignUpScreen.jsx";
@@ -94,35 +95,37 @@ const App = createAppContainer(switchNavigator);
 const MainApp = () => {
     return (
         <TrackProvider>
-            <LocationProvider>
-                <AuthProvider>
-                    <ApplicationProvider {...eva} theme={eva.dark}>
-                        <SafeAreaView
-                            style={{
-                                flex: 1,
-                                backgroundColor: "rgb(33, 34, 48)",
-                            }}
-                        >
-                            <AppStatusBar barStyle="light-content" />
-                            <View
+            <TrackDetailsProvider>
+                <LocationProvider>
+                    <AuthProvider>
+                        <ApplicationProvider {...eva} theme={eva.dark}>
+                            <SafeAreaView
                                 style={{
                                     flex: 1,
-                                    paddingTop:
-                                        Platform.OS === "android"
-                                            ? StatusBar.currentHeight
-                                            : 0,
+                                    backgroundColor: "rgb(33, 34, 48)",
                                 }}
                             >
-                                <App
-                                    ref={(navigator) => {
-                                        setNavigator(navigator);
+                                <AppStatusBar barStyle="light-content" />
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        paddingTop:
+                                            Platform.OS === "android"
+                                                ? StatusBar.currentHeight
+                                                : 0,
                                     }}
-                                />
-                            </View>
-                        </SafeAreaView>
-                    </ApplicationProvider>
-                </AuthProvider>
-            </LocationProvider>
+                                >
+                                    <App
+                                        ref={(navigator) => {
+                                            setNavigator(navigator);
+                                        }}
+                                    />
+                                </View>
+                            </SafeAreaView>
+                        </ApplicationProvider>
+                    </AuthProvider>
+                </LocationProvider>
+            </TrackDetailsProvider>
         </TrackProvider>
     );
 };

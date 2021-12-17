@@ -64,7 +64,7 @@ const TrackListScreen = ({ navigation }) => {
                         />
                     )}
                     onPress={() =>
-                        navigation.navigate("Detail", { trackId: item._id })
+                        navigation.navigate("Detail", { trackId: item.id })
                     }
                 >
                     View Details
