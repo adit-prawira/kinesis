@@ -10,7 +10,7 @@ import { Provider as TrackDetailsProvider } from "./src/context/TrackDetailsCont
 import AccountScreen from "./src/screens/AccountScreen.jsx";
 import SignInScreen from "./src/screens/SignInScreen.jsx";
 import SignUpScreen from "./src/screens/SignUpScreen.jsx";
-import TrackDetailsScreen from "./src/screens/TrackDetailsScreen.jsx";
+import TrackDetailsScreen from "./src/screens/TrackDetailsScreen";
 import TrackListScreen from "./src/screens/TrackListScreen.jsx";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen.jsx";
 import TrackCreateScreen from "./src/screens/TrackCreateScreen";

@@ -1,12 +1,13 @@
 import produce from "immer";
-import createDataContext from "./createDataContext";
+import createDataContext from "./utils/createDataContext";
 import trackApi from "../api/trackApi";
 import {
     GET_TRACK,
     UPDATE_TRACK,
     DELETE_TRACK,
     ALERT_ERROR,
-} from "./actionTypes";
+    CLEAN_UP_TRACK,
+} from "./utils/actionTypes";
 const initialState = { details: null, error: null, success: null };
 const trackDetailsReducer = produce((state = initialState, action) => {
     switch (action.type) {
@@ -16,6 +17,9 @@ const trackDetailsReducer = produce((state = initialState, action) => {
         case UPDATE_TRACK:
             return state;
         case DELETE_TRACK:
+            return state;
+        case CLEAN_UP_TRACK:
+            state = initialState;
             return state;
         case ALERT_ERROR:
             return state;
@@ -27,10 +31,15 @@ const getTrack = (dispatch) => async (trackId) => {
         const res = await trackApi.get(`/tracks/${trackId}`);
         dispatch({ type: GET_TRACK, payload: res.data });
     } catch (err) {
-        console.log(err);
+        dispatch({
+            type: ALERT_ERROR,
+            payload: "ERROR: Unable to get track details",
+        });
     }
 };
 
+const cleanUpTrackDetails = (dispatch) => () =>
+    dispatch({ type: CLEAN_UP_TRACK });
 const updateTrack = (dispatch) => async (updatedFormValues) => {};
 const deleteTrack = (dispatch) => async (trackId) => {};
 export const { Provider, Context } = createDataContext(
@@ -39,6 +48,7 @@ export const { Provider, Context } = createDataContext(
         getTrack,
         updateTrack,
         deleteTrack,
+        cleanUpTrackDetails,
     },
     initialState
 );

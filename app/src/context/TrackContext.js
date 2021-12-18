@@ -1,9 +1,9 @@
 import produce from "immer";
-import createDataContext from "./createDataContext";
-import { GET_TRACKS, CREATE_TRACK, ALERT_ERROR } from "./actionTypes";
+import createDataContext from "./utils/createDataContext";
+import { GET_TRACKS, CREATE_TRACK, ALERT_ERROR } from "./utils/actionTypes";
 import trackApi from "../api/trackApi";
 
-const initialState = { tracks: [], error: null, success: null };
+const initialState = { tracks: null, error: null, success: null };
 
 const trackReducer = produce((state = initialState, action) => {
     switch (action.type) {

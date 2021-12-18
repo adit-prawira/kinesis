@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+    run_tests:
+        docker:
+            - image: cimg/node:17.2.0
+        steps:
+            - checkout
+            - run:
+                  name: Install npm/yarn dependencies
+                  command: yarn
+            - run:
+                  name: Run unit test
+                  command: yarn test
+workflows:
+    build_test:
+        jobs:
+            - run_tests

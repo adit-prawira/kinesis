@@ -1,16 +1,24 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import {
+    View,
+    StyleSheet,
+    SafeAreaView,
+    Image,
+    ScrollView,
+} from "react-native";
 import {
     Button,
     List,
-    Spinner,
     ListItem,
     Divider,
+    Card,
+    Text,
 } from "@ui-kitten/components";
 import { Context as TrackContext } from "../context/TrackContext";
 import { NavigationEvents } from "react-navigation";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import LoadSpinner from "../components/LoadSpinner.jsx";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -30,6 +38,27 @@ const styles = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 8,
         paddingVertical: 4,
+    },
+    image: { width: 300, height: 300 },
+    cardContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "2%",
+    },
+    noDataContainer: {
+        flex: 1,
+        padding: "1%",
+        backgroundColor: "rgb(45, 48, 65)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "25%",
+    },
+    noDataText: {
+        textAlign: "center",
+        marginTop: "10%",
+        color: "#5bc78d",
     },
 });
 
@@ -73,10 +102,9 @@ const TrackListScreen = ({ navigation }) => {
             style={styles.list}
         />
     );
-    return (
-        <SafeAreaView style={styles.container}>
-            <NavigationEvents onWillFocus={getTracks} />
-            {tracks.length > 0 ? (
+    const renderContent = () => {
+        if (tracks.length > 0) {
+            return (
                 <List
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}
@@ -86,10 +114,28 @@ const TrackListScreen = ({ navigation }) => {
                     )}
                     renderItem={renderListItem}
                 />
-            ) : (
-                <Spinner status="success" />
-            )}
-        </SafeAreaView>
+            );
+        }
+        return (
+            <View style={styles.noDataContainer}>
+                <Card style={styles.cardContainer}>
+                    <Image
+                        source={require("../../assets/NoData.png")}
+                        style={styles.image}
+                    />
+                    <Text style={styles.noDataText} category="s1">
+                        You don't have any records yet
+                    </Text>
+                </Card>
+            </View>
+        );
+    };
+
+    return (
+        <ScrollView style={styles.container}>
+            <NavigationEvents onWillFocus={getTracks} />
+            {tracks !== null ? renderContent() : <LoadSpinner />}
+        </ScrollView>
     );
 };
 

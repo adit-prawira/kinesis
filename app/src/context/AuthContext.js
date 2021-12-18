@@ -1,7 +1,7 @@
-import createDataContext from "./createDataContext";
+import createDataContext from "./utils/createDataContext";
 import trackApi from "../api/trackApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SIGN_IN, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./actionTypes";
+import { SIGN_IN, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./utils/actionTypes";
 import { navigate } from "../navigationRef";
 import produce from "immer";
 

@@ -20,6 +20,7 @@ export const GET_TRACK = "GET_TRACK";
 export const CREATE_TRACK = "CREATE_TRACK";
 export const UPDATE_TRACK = "UPDATE_TRACK";
 export const DELETE_TRACK = "DELETE_TRACK";
+export const CLEAN_UP_TRACK = "CLEAN_UP_TRACK";
 
 /******************************* ALERT ACTIONS TYPES *******************************/
 export const ALERT_SUCCESS = "ALERT_SUCCESS";

@@ -1,4 +1,4 @@
-import createDataContext from "./createDataContext";
+import createDataContext from "./utils/createDataContext";
 import {
     ADD_CURRENT_LOCATION,
     ADD_LOCATION,
@@ -8,7 +8,7 @@ import {
     RESET_TRACK_FORM,
     SET_MET_LEVEL,
     SET_TIME_RECORDED,
-} from "./actionTypes";
+} from "./utils/actionTypes";
 import produce from "immer";
 
 const initialState = {

@@ -1,14 +1,21 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import MapView, { Polyline, Circle } from "react-native-maps";
 import { Context as LocationContext } from "../context/LocationContext";
 const styles = StyleSheet.create({
     map: {
-        height: 300,
+        height: 500,
         borderRadius: 5,
     },
     activityIndicator: {
         marginTop: 200,
+    },
+    loadingContainer: {
+        height: 300,
+        borderRadius: 5,
+        borderColor: "white",
+        borderWidth: 1,
+        borderRadius: 5,
     },
 });
 
@@ -19,10 +26,15 @@ const Map = () => {
 
     if (!currentLocation) {
         return (
-            <ActivityIndicator size="large" style={styles.activityIndicator} />
+            <View styles={styles.loadingContainer}>
+                <ActivityIndicator
+                    size="large"
+                    style={styles.activityIndicator}
+                />
+            </View>
         );
     }
-
+    console.log("current fucking location", currentLocation);
     return (
         <MapView
             style={styles.map}
