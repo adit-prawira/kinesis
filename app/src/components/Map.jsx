@@ -34,7 +34,7 @@ const Map = () => {
             </View>
         );
     }
-    console.log("current fucking location", currentLocation);
+
     return (
         <MapView
             style={styles.map}

@@ -8,8 +8,8 @@ import {
     ALERT_ERROR,
     CLEAN_UP_TRACK,
 } from "./utils/actionTypes";
-const initialState = { details: null, error: null, success: null };
-const trackDetailsReducer = produce((state = initialState, action) => {
+export const initialState = { details: null, error: null, success: null };
+export const trackDetailsReducer = produce((state = initialState, action) => {
     switch (action.type) {
         case GET_TRACK:
             state.details = action.payload;

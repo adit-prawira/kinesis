@@ -1,28 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Text } from "@ui-kitten/components";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { navigate } from "../../navigationRef";
-const styles = StyleSheet.create({
-    container: {},
-    subContainer: {
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        flexDirection: "row",
-
-        marginTop: "2%",
-    },
-    card: {
-        width: 120,
-        height: 70,
-        paddingTop: 10,
-        display: "flex",
-        alignItems: "center",
-    },
-    textSecondary: { color: "rgba(255, 255, 255, 0.6)" },
-    button: { marginBottom: "5%" },
-});
+import { detailsOverviewStyles as styles } from "./styles";
 const DetailsOverview = ({
     details: {
         met,

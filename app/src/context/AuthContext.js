@@ -1,23 +1,37 @@
 import createDataContext from "./utils/createDataContext";
 import trackApi from "../api/trackApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SIGN_IN, AUTH_ERROR, CLEAR_ERROR_MESSAGE } from "./utils/actionTypes";
+import {
+    SIGN_IN,
+    AUTH_ERROR,
+    CLEAR_ERROR_MESSAGE,
+    CLEAN_UP_AUTH_DETAILS,
+} from "./utils/actionTypes";
 import { navigate } from "../navigationRef";
 import produce from "immer";
 
-const initialState = { token: null, errorMessage: "" };
+export const initialState = {
+    token: null,
+    errorMessage: "",
+    currentUser: null,
+};
+
 // authReducer
-const authReducer = produce((state = initialState, action) => {
+export const authReducer = produce((state = initialState, action) => {
     switch (action.type) {
         case SIGN_IN:
             state.errorMessage = "";
-            state.token = action.payload;
+            state.token = action.payload.token;
+            state.currentUser = { ...action.payload.currentUser };
             return state;
         case AUTH_ERROR:
             state.errorMessage = action.payload;
             return state;
         case CLEAR_ERROR_MESSAGE:
             state.errorMessage = "";
+            return state;
+        case CLEAN_UP_AUTH_DETAILS:
+            state = initialState;
             return state;
         default:
             return state;
@@ -55,7 +69,6 @@ const signUp =
             navigate("List");
         } catch (err) {
             // if fails => reflect an error message
-            console.log(err.response.data);
 
             dispatch({
                 type: AUTH_ERROR,
@@ -110,6 +123,7 @@ const signIn =
 const signOut = (dispatch) => async () => {
     // API request to sign out, might destroy jwt token
     await AsyncStorage.removeItem("token");
+    dispatch({ type: CLEAN_UP_AUTH_DETAILS });
     navigate("SignUp");
 };
 
@@ -121,8 +135,11 @@ const signOut = (dispatch) => async () => {
  */
 const autoLocalSignIn = (dispatch) => async () => {
     const token = await AsyncStorage.getItem("token");
+    const res = await trackApi.get("/users/currentuser");
+    const currentUser = res.data.currentUser;
+
     if (token) {
-        dispatch({ type: SIGN_IN, payload: token });
+        dispatch({ type: SIGN_IN, payload: { token, currentUser } });
         navigate("List");
     } else {
         navigate("SignUp");

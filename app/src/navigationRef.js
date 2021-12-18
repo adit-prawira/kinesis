@@ -1,6 +1,6 @@
 import { NavigationActions } from "react-navigation";
 
-let navigator;
+let navigator = null;
 
 export const setNavigator = (nav) => {
     navigator = nav;

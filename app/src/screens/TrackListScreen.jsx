@@ -132,10 +132,10 @@ const TrackListScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <NavigationEvents onWillFocus={getTracks} />
             {tracks !== null ? renderContent() : <LoadSpinner />}
-        </ScrollView>
+        </SafeAreaView>
     );
 };
 

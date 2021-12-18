@@ -9,7 +9,6 @@ export const useSaveTrack = () => {
         resetTrackForm,
     } = useContext(LocationContext);
     const saveTrack = async () => {
-        // console.log({ name, locations, met, timeRecorded });
         await createTrack({ name, locations, met, timeRecorded });
         resetTrackForm(); // reset track create form
         navigate("List");

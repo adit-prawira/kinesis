@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
 import { Context as TrackDetailsContext } from "../../context/TrackDetailsContext";
 import uuid from "react-native-uuid";
 import LoadSpinner from "../../components/LoadSpinner.jsx";
@@ -59,21 +59,19 @@ const TrackDetailsScreen = ({
 
     const dataIsReadyToRender = () => details && midPoint && markers;
 
-    return (
+    return dataIsReadyToRender() ? (
         <ScrollView style={styles.container}>
-            {dataIsReadyToRender() ? (
-                <>
-                    <MapDirections
-                        locations={details.locations}
-                        midPoint={midPoint}
-                        markers={markers}
-                    />
-                    <DetailsOverview details={_.omit(details, ["locations"])} />
-                </>
-            ) : (
-                <LoadSpinner />
-            )}
+            <MapDirections
+                locations={details.locations}
+                midPoint={midPoint}
+                markers={markers}
+            />
+            <DetailsOverview details={_.omit(details, ["locations"])} />
         </ScrollView>
+    ) : (
+        <SafeAreaView style={styles.container}>
+            <LoadSpinner />
+        </SafeAreaView>
     );
 };
 

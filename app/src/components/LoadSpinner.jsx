@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "50%",
+        marginTop: "auto",
+        marginBottom: "auto",
     },
     text: {
         position: "absolute",

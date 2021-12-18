@@ -4,7 +4,7 @@ export const SIGN_IN = "SIGN_IN";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const SIGN_OUT = "SIGN_OUT";
 export const CLEAR_ERROR_MESSAGE = "CLEAR_ERROR_MESSAGE";
-
+export const CLEAN_UP_AUTH_DETAILS = "CLEAN_UP_AUTH_DETAILS ";
 /******************************* LOCATION ACTIONS TYPES *******************************/
 export const ADD_CURRENT_LOCATION = "ADD_CURRENT_LOCATION ";
 export const ADD_LOCATION = "ADD_LOCATION";

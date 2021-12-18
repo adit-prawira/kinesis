@@ -5,7 +5,14 @@
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
-        "eject": "expo eject"
+        "eject": "expo eject",
+        "dev-test": "jest --watchAll --no-cache",
+        "test": "jest"
+    },
+    "jest": {
+        "transformIgnorePatterns": [
+            "node_modules/(?!(jest-)?react-native|@?react-navigation)"
+        ]
     },
     "dependencies": {
         "@eva-design/eva": "^2.1.0",
@@ -20,6 +27,7 @@
         "expo-sensors": "^11.0.3",
         "expo-status-bar": "~1.1.0",
         "immer": "^9.0.6",
+        "jest": "^27.4.5",
         "moment": "^2.29.1",
         "native-base": "^3.0.3",
         "ngrok": "^4.0.1",
