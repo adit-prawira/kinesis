@@ -15,6 +15,7 @@ describe("Track details context test suite", () => {
         dateCreated: "2021-11-22T00:20:42.655Z",
         dateUpdated: "2021-12-18T10:23:06.951Z",
         id: "619ae25a4c186316c95249a4",
+        avatar: "",
     };
 
     it("tests that details will not be null when data is fetched", () => {
@@ -32,6 +33,7 @@ describe("Track details context test suite", () => {
         expect(state.currentUser.dateCreated).toEqual(currentUser.dateCreated);
         expect(state.currentUser.dateUpdated).toEqual(currentUser.dateUpdated);
         expect(state.currentUser.id).toEqual(currentUser.id);
+        expect(state.currentUser.avatar).toEqual(currentUser.avatar);
     });
 
     it("tests that token is not empty", () => {
