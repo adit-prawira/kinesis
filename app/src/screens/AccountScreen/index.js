@@ -13,7 +13,7 @@ import { MomentDateService } from "@ui-kitten/moment";
 import LoadSpinner from "../../components/LoadSpinner";
 import moment from "moment";
 import { accountScreenStyles as styles } from "./styles";
-
+import { launchImageLibrary } from "react-native-image-picker";
 const dateService = new MomentDateService();
 const AccountScreen = () => {
     const {
@@ -21,7 +21,10 @@ const AccountScreen = () => {
         signOut,
     } = useContext(AuthContext);
     const [date, setDate] = useState(moment);
-
+    const handlePickImage = async () => {
+        const result = await launchImageLibrary();
+        console.log(result);
+    };
     return currentUser ? (
         <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
@@ -31,7 +34,7 @@ const AccountScreen = () => {
                         source={require("../../../assets/favicon.png")}
                     />
                 </View>
-
+                <Button onPress={handlePickImage}>upload image</Button>
                 <Text style={styles.welcomeText}>
                     Welcome back {currentUser.username}!
                 </Text>

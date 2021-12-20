@@ -134,14 +134,18 @@ const signOut = (dispatch) => async () => {
  *          in AsyncStorage
  */
 const autoLocalSignIn = (dispatch) => async () => {
-    const token = await AsyncStorage.getItem("token");
-    const res = await trackApi.get("/users/currentuser");
-    const currentUser = res.data.currentUser;
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const res = await trackApi.get("/users/currentuser");
+        const currentUser = res.data.currentUser;
 
-    if (token) {
-        dispatch({ type: SIGN_IN, payload: { token, currentUser } });
-        navigate("List");
-    } else {
+        if (token) {
+            dispatch({ type: SIGN_IN, payload: { token, currentUser } });
+            navigate("List");
+        } else {
+            navigate("SignUp");
+        }
+    } catch (err) {
         navigate("SignUp");
     }
 };
