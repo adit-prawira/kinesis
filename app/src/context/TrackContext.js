@@ -23,7 +23,7 @@ export const trackReducer = produce((state = initialState, action) => {
 
 const getTracks = (dispatch) => async () => {
     try {
-        const tracks = (await trackApi.get("/tracks")).data;
+        const tracks = (await trackApi.get("/api/tracks")).data;
         dispatch({ type: GET_TRACKS, payload: tracks });
     } catch (err) {
         dispatch({
@@ -35,7 +35,7 @@ const getTracks = (dispatch) => async () => {
 
 const createTrack = (dispatch) => async (formValues) => {
     try {
-        const res = await trackApi.post("/tracks/new", formValues);
+        const res = await trackApi.post("/api/tracks/new", formValues);
         const newTrack = _.pick(res.data, [
             "dateCreated",
             "dateUpdated",

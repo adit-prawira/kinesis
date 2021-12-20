@@ -1,10 +1,11 @@
+import { NODE_KINESIS_BASE_URL } from "../../../route";
 import { initialState, authReducer } from "../AuthContext";
 import { SIGN_IN, CLEAN_UP_AUTH_DETAILS } from "../utils/actionTypes";
 
 describe("Track details context test suite", () => {
     let state;
     const sampleToken = {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWJkODAwMjQ4YTA1NmM0NWFiODkyMDAiLCJpYXQiOjE2Mzk4MjcxNDF9.pJ6HQi4ZWA_LL5Su9EAhJQWgaJZRxfAAqUuWcl7ckCQ",
+        token: "heloIWUHFOIADJNFOIQWEUFHWEIOUGBVWOI8",
     };
     const currentUser = {
         username: "goodStudent",
@@ -33,7 +34,9 @@ describe("Track details context test suite", () => {
         expect(state.currentUser.dateCreated).toEqual(currentUser.dateCreated);
         expect(state.currentUser.dateUpdated).toEqual(currentUser.dateUpdated);
         expect(state.currentUser.id).toEqual(currentUser.id);
-        expect(state.currentUser.avatar).toEqual(currentUser.avatar);
+        expect(state.currentUser.avatar).toEqual(
+            `${NODE_KINESIS_BASE_URL}${currentUser.avatar}`
+        );
     });
 
     it("tests that token is not empty", () => {

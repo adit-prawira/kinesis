@@ -6,10 +6,11 @@ import {
     AUTH_ERROR,
     CLEAR_ERROR_MESSAGE,
     CLEAN_UP_AUTH_DETAILS,
+    UPLOAD_PROFILE_IMAGE,
 } from "./utils/actionTypes";
 import { navigate } from "../navigationRef";
 import produce from "immer";
-
+import { NODE_KINESIS_BASE_URL } from "../../route";
 export const initialState = {
     token: null,
     errorMessage: "",
@@ -23,6 +24,10 @@ export const authReducer = produce((state = initialState, action) => {
             state.errorMessage = "";
             state.token = action.payload.token;
             state.currentUser = { ...action.payload.currentUser };
+            state.currentUser = {
+                ...state.currentUser,
+                avatar: `${NODE_KINESIS_BASE_URL}${state.currentUser.avatar}`,
+            };
             return state;
         case AUTH_ERROR:
             state.errorMessage = action.payload;
@@ -32,6 +37,14 @@ export const authReducer = produce((state = initialState, action) => {
             return state;
         case CLEAN_UP_AUTH_DETAILS:
             state = initialState;
+            return state;
+        case UPLOAD_PROFILE_IMAGE:
+            if (state.currentUser) {
+                state.currentUser = {
+                    ...state.currentUser,
+                    avatar: action.payload,
+                };
+            }
             return state;
         default:
             return state;
@@ -55,7 +68,7 @@ const signUp =
     async ({ email, password }) => {
         try {
             // API request to sign up
-            const res = await trackApi.post("/users/signup", {
+            const res = await trackApi.post("/api/users/signup", {
                 email,
                 password,
             });
@@ -93,7 +106,7 @@ const signIn =
     async ({ email, password }) => {
         try {
             // API request to sign in
-            const res = await trackApi.post("/users/signin", {
+            const res = await trackApi.post("/api/users/signin", {
                 email,
                 password,
             });
@@ -136,7 +149,7 @@ const signOut = (dispatch) => async () => {
 const autoLocalSignIn = (dispatch) => async () => {
     try {
         const token = await AsyncStorage.getItem("token");
-        const res = await trackApi.get("/users/currentuser");
+        const res = await trackApi.get("/api/users/currentuser");
         const currentUser = res.data.currentUser;
 
         if (token) {
@@ -159,11 +172,38 @@ const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: CLEAR_ERROR_MESSAGE });
 };
 
-const uploadProfileImage = (dispatch) => (photo) => {
+const uploadProfileImage = (dispatch) => async (photo) => {
     const formData = new FormData();
+    const localUri = photo.uri;
+    const fileName = localUri.split("/").pop();
+    let match = /\.(\w+)$/.exec(fileName);
+    let type = match ? `image/${match[1]}` : `image`;
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    };
+    formData.append("image", { uri: localUri, name: fileName, type });
+    const res = await trackApi.post(
+        "/api/users/account/profile-picture",
+        formData,
+        config
+    );
+    const avatarPath = res.data.imagePath;
+    dispatch({
+        type: UPLOAD_PROFILE_IMAGE,
+        payload: `${NODE_KINESIS_BASE_URL}${avatarPath}`,
+    });
 };
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
-    { signUp, signIn, signOut, clearErrorMessage, autoLocalSignIn }, // action functions
+    {
+        signUp,
+        signIn,
+        signOut,
+        clearErrorMessage,
+        autoLocalSignIn,
+        uploadProfileImage,
+    }, // action functions
     initialState // initial state or default value
 );

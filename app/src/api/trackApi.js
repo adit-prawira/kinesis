@@ -1,7 +1,8 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NODE_KINESIS_BASE_URL } from "../../route";
 const trackApi = axios.create({
-    baseURL: "https://nodekinesisapi-dev-fbfdb9543a.herokuapp.com/api",
+    baseURL: NODE_KINESIS_BASE_URL,
 });
 trackApi.interceptors.request.use(
     async (config) => {

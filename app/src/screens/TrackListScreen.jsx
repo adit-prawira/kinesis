@@ -1,11 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {
-    View,
-    StyleSheet,
-    SafeAreaView,
-    Image,
-    ScrollView,
-} from "react-native";
+import { View, StyleSheet, SafeAreaView, Image } from "react-native";
 import {
     Button,
     List,

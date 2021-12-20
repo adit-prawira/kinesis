@@ -28,7 +28,7 @@ export const trackDetailsReducer = produce((state = initialState, action) => {
 
 const getTrack = (dispatch) => async (trackId) => {
     try {
-        const res = await trackApi.get(`/tracks/${trackId}`);
+        const res = await trackApi.get(`/api/tracks/${trackId}`);
         dispatch({ type: GET_TRACK, payload: res.data });
     } catch (err) {
         dispatch({

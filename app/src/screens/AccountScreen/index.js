@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, ScrollView, SafeAreaView } from "react-native";
+import { View, ScrollView, SafeAreaView, Platform, Image } from "react-native";
 import {
     Button,
     Calendar,
@@ -13,28 +13,54 @@ import { MomentDateService } from "@ui-kitten/moment";
 import LoadSpinner from "../../components/LoadSpinner";
 import moment from "moment";
 import { accountScreenStyles as styles } from "./styles";
-import { launchImageLibrary } from "react-native-image-picker";
+import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 const dateService = new MomentDateService();
 const AccountScreen = () => {
     const {
         state: { currentUser },
         signOut,
+        uploadProfileImage,
     } = useContext(AuthContext);
     const [date, setDate] = useState(moment);
     const handlePickImage = async () => {
-        const result = await launchImageLibrary();
-        console.log(result);
+        // No permissions request is necessary for launching the image library
+        let result = await launchImageLibraryAsync({
+            mediaTypes: MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.cancelled && result.uri) {
+            if (Platform.OS === "ios") {
+                result = { ...result, uri: result.uri.replace("file://", "") };
+            }
+            uploadProfileImage(result);
+        }
     };
+
     return currentUser ? (
         <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
                 <View style={styles.avatar}>
-                    <Avatar
-                        size="large"
-                        source={require("../../../assets/favicon.png")}
+                    <Image
+                        style={styles.image}
+                        source={
+                            currentUser.avatar
+                                ? { uri: currentUser.avatar }
+                                : require("../../../assets/favicon.png")
+                        }
                     />
                 </View>
-                <Button onPress={handlePickImage}>upload image</Button>
+                <Button
+                    onPress={handlePickImage}
+                    appearance="outline"
+                    size="small"
+                    status="success"
+                    style={styles.uploadButton}
+                >
+                    Upload Profile Picture
+                </Button>
                 <Text style={styles.welcomeText}>
                     Welcome back {currentUser.username}!
                 </Text>

@@ -17,9 +17,10 @@ export const accountScreenStyles = StyleSheet.create({
     avatar: {
         borderColor: "rgba(255, 255, 255, 0.7)",
         borderWidth: 2,
-        padding: "3%",
         borderRadius: 50,
     },
+    image: { width: 100, height: 100, borderWidth: 2, borderRadius: 50 },
+    uploadButton: { marginTop: "5%" },
     divider: {
         backgroundColor: "rgba(255, 255, 255, 0.3)",
         width: "100%",
