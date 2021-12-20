@@ -155,6 +155,9 @@ const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: CLEAR_ERROR_MESSAGE });
 };
 
+const uploadProfileImage = (dispatch) => (photo) => {
+    const formData = new FormData();
+};
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
     { signUp, signIn, signOut, clearErrorMessage, autoLocalSignIn }, // action functions

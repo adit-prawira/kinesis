@@ -31,6 +31,7 @@ const AccountScreen = () => {
                         source={require("../../../assets/favicon.png")}
                     />
                 </View>
+
                 <Text style={styles.welcomeText}>
                     Welcome back {currentUser.username}!
                 </Text>
