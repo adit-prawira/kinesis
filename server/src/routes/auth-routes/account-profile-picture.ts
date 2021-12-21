@@ -12,7 +12,7 @@ const upload = multer({ dest: "uploads/" });
 const unlinkFile = util.promisify(fs.unlink);
 
 router.get(
-    "/api/users/account/profile-picture/:key",
+    "/api/users/account/profile-picture/:key", requireAuth,
     (req: Request, res: Response) => {
         try {
             const key = req.params.key;

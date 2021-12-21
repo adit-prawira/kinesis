@@ -45,4 +45,9 @@ export const accountScreenStyles = StyleSheet.create({
     text: { textAlign: "center" },
     welcomeText: { marginTop: "5%", fontSize: 23 },
     textSecondary: { color: "rgba(255, 255, 255, 0.8)" },
+    buttonContainer: {
+        width: "100%",
+        padding: "1%",
+        display: "flex",
+    },
 });

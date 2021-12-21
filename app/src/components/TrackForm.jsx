@@ -122,7 +122,6 @@ const TrackForm = () => {
             <Spacer>
                 <Card
                     style={styles.item}
-                    status="basic"
                     header={() => (
                         <Text style={styles.title}>Choose Activity:</Text>
                     )}

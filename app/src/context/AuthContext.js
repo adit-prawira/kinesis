@@ -7,10 +7,12 @@ import {
     CLEAR_ERROR_MESSAGE,
     CLEAN_UP_AUTH_DETAILS,
     UPLOAD_PROFILE_IMAGE,
+    UPLOAD_HEALTH_PROFILE,
 } from "./utils/actionTypes";
 import { navigate } from "../navigationRef";
 import produce from "immer";
 import { NODE_KINESIS_BASE_URL } from "../../route";
+
 export const initialState = {
     token: null,
     errorMessage: "",
@@ -45,6 +47,10 @@ export const authReducer = produce((state = initialState, action) => {
                     avatar: action.payload,
                 };
             }
+            return state;
+        case UPLOAD_HEALTH_PROFILE:
+            const { age, mass, height } = action.payload;
+            state.currentUser = { ...state.currentUser, age, mass, height };
             return state;
         default:
             return state;
@@ -195,6 +201,11 @@ const uploadProfileImage = (dispatch) => async (photo) => {
         payload: `${NODE_KINESIS_BASE_URL}${avatarPath}`,
     });
 };
+
+const updateHealthProfile = (dispatch) => async (formValues) => {
+    await trackApi.put("/api/users/health-profile/update", formValues);
+    dispatch({ type: UPLOAD_HEALTH_PROFILE, payload: formValues });
+};
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
     {
@@ -204,6 +215,7 @@ export const { Provider, Context } = createDataContext(
         clearErrorMessage,
         autoLocalSignIn,
         uploadProfileImage,
+        updateHealthProfile,
     }, // action functions
     initialState // initial state or default value
 );
