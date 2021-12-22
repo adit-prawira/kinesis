@@ -18,7 +18,7 @@ In app directory to install all dependencies utilised in the application.
 yarn ios
 ```
 
-### 2.2 Running App on Android Simulator: (Note: You must have Android Studio Simulator Open or other Android Simulator)
+### 2.2 Running App on Android Simulator: (Note: You must have an Android Simulator or connected to the existing Android devices)
 
 ```
 yarn android
@@ -34,19 +34,4 @@ Step 2 - Run the following command in your terminal and you should be inside app
 yarn start
 ```
 
-Step 3 - Scan the QR Code generated in the terminal with the Expo Go app.
-
-### 2.4 Running Backend server (OPTIONAL):
-
-It is optional to run the backend server of the app as it is has been deployed, however if interested to run it and test it go to server directory and run
-
-```
-npm run dev
-```
-
-or 
-
-```
-npm start
-```
-
+Step 3 - Scan the QR Code generated in the terminal window with the Expo Go app after running yarn start.
