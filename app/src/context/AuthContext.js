@@ -71,10 +71,11 @@ const signUp =
      * @param {string} email
      * @param {string} password
      */
-    async ({ email, password }) => {
+    async ({ username, email, password }) => {
         try {
             // API request to sign up
             const res = await trackApi.post("/api/users/signup", {
+                username,
                 email,
                 password,
             });
@@ -206,6 +207,7 @@ const updateHealthProfile = (dispatch) => async (formValues) => {
     await trackApi.put("/api/users/health-profile/update", formValues);
     dispatch({ type: UPLOAD_HEALTH_PROFILE, payload: formValues });
 };
+
 export const { Provider, Context } = createDataContext(
     authReducer, // reducer
     {

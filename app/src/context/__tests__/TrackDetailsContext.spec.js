@@ -1,5 +1,5 @@
 import { initialState, trackDetailsReducer } from "../TrackDetailsContext";
-import { GET_TRACK, CLEAN_UP_TRACK } from "../utils/actionTypes";
+import { GET_TRACK, CLEAN_UP } from "../utils/actionTypes";
 describe("Track details context test suite", () => {
     let state;
     const fetchedData = {
@@ -66,7 +66,7 @@ describe("Track details context test suite", () => {
         );
     });
     it("tests that details data will be reset during unmounting", () => {
-        const action = { type: CLEAN_UP_TRACK };
+        const action = { type: CLEAN_UP };
         state = trackDetailsReducer(state, action);
         expect(state.details).toBeNull();
         expect(state).toEqual(initialState);

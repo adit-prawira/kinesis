@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const SignUpScreen = () => {
-    const { state, signUp, clearErrorMessage, autoLocalSignIn } =
-        useContext(AuthContext);
+    const { state, signUp, clearErrorMessage } = useContext(AuthContext);
     const { errorMessage } = state;
 
     return (
@@ -29,6 +28,7 @@ const SignUpScreen = () => {
                 errorMessage={errorMessage}
                 screenTitle="Sign Up"
                 onSubmit={signUp}
+                mode="signup"
             />
             <NavLink
                 text="Already have an account? Sign in here."

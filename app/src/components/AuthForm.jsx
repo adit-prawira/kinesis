@@ -3,6 +3,7 @@ import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Text, Input, Button } from "@ui-kitten/components";
+import PropTypes from "prop-types";
 import Spacer from "./Spacer.jsx";
 const styles = StyleSheet.create({
     title: {
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
     },
 });
 
-const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
+const AuthForm = ({ errorMessage, screenTitle, onSubmit, mode = "signin" }) => {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -37,11 +39,40 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
             />
         </TouchableWithoutFeedback>
     );
+    const handleSubmit = () => {
+        if (mode === "signin") {
+            onSubmit({ email, password });
+        } else {
+            onSubmit({ username, email, password });
+        }
+    };
+    const renderUsernameInput = () =>
+        mode === "signup" && (
+            <Spacer>
+                <Input
+                    style={styles.input}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    label={<Text>Username:</Text>}
+                    value={username}
+                    onChangeText={setUsername}
+                    placeholder="Enter your username"
+                    accessoryLeft={() => (
+                        <FontAwesomeIcon
+                            name="user-circle-o"
+                            size={24}
+                            color="white"
+                        />
+                    )}
+                />
+            </Spacer>
+        );
     return (
         <React.Fragment>
             <Spacer>
                 <Text style={styles.title}>{screenTitle}</Text>
             </Spacer>
+            {renderUsernameInput()}
             <Spacer>
                 <Input
                     style={styles.input}
@@ -88,7 +119,7 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
                     style={styles.button}
                     appearance="outline"
                     status="success"
-                    onPress={() => onSubmit({ email, password })}
+                    onPress={handleSubmit}
                 >
                     {screenTitle}
                 </Button>
@@ -96,5 +127,11 @@ const AuthForm = ({ errorMessage, screenTitle, onSubmit }) => {
         </React.Fragment>
     );
 };
+AuthForm.propTypes = {
+    errorMessage: PropTypes.string,
+    screenTitle: PropTypes.string,
+    onSubmit: PropTypes.func,
 
+    mode: PropTypes.arrayOf(["signin", "signup"]),
+};
 export default AuthForm;

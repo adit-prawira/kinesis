@@ -6,7 +6,7 @@ import {
     UPDATE_TRACK,
     DELETE_TRACK,
     ALERT_ERROR,
-    CLEAN_UP_TRACK,
+    CLEAN_UP,
 } from "./utils/actionTypes";
 export const initialState = { details: null, error: null, success: null };
 export const trackDetailsReducer = produce((state = initialState, action) => {
@@ -18,7 +18,7 @@ export const trackDetailsReducer = produce((state = initialState, action) => {
             return state;
         case DELETE_TRACK:
             return state;
-        case CLEAN_UP_TRACK:
+        case CLEAN_UP:
             state = initialState;
             return state;
         case ALERT_ERROR:
@@ -38,8 +38,7 @@ const getTrack = (dispatch) => async (trackId) => {
     }
 };
 
-const cleanUpTrackDetails = (dispatch) => () =>
-    dispatch({ type: CLEAN_UP_TRACK });
+const cleanup = (dispatch) => () => dispatch({ type: CLEAN_UP });
 const updateTrack = (dispatch) => async (updatedFormValues) => {};
 const deleteTrack = (dispatch) => async (trackId) => {};
 export const { Provider, Context } = createDataContext(
@@ -48,7 +47,7 @@ export const { Provider, Context } = createDataContext(
         getTrack,
         updateTrack,
         deleteTrack,
-        cleanUpTrackDetails,
+        cleanup,
     },
     initialState
 );

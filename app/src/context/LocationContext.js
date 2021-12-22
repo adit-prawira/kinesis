@@ -8,6 +8,7 @@ import {
     RESET_TRACK_FORM,
     SET_MET_LEVEL,
     SET_TIME_RECORDED,
+    CLEAN_UP,
 } from "./utils/actionTypes";
 import produce from "immer";
 
@@ -45,6 +46,9 @@ const locationReducer = produce((state = initialState, action) => {
             return state;
         case RESET_TRACK_FORM:
             state = { ...initialState, currentLocation: state.currentLocation };
+            return state;
+        case CLEAN_UP:
+            state = initialState;
             return state;
         default:
             return state;
@@ -129,6 +133,9 @@ const resetTrackForm = (dispatch) => () => {
     dispatch({ type: RESET_TRACK_FORM });
 };
 
+const cleanup = (dispatch) => () => {
+    dispatch({ type: CLEAN_UP });
+};
 export const { Context, Provider } = createDataContext(
     locationReducer,
     {
@@ -139,6 +146,7 @@ export const { Context, Provider } = createDataContext(
         resetTrackForm,
         setMetLevel,
         setTimeRecorded,
+        cleanup,
     },
     initialState
 );

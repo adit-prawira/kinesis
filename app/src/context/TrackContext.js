@@ -1,6 +1,11 @@
 import produce from "immer";
 import createDataContext from "./utils/createDataContext";
-import { GET_TRACKS, CREATE_TRACK, ALERT_ERROR } from "./utils/actionTypes";
+import {
+    GET_TRACKS,
+    CREATE_TRACK,
+    ALERT_ERROR,
+    CLEAN_UP,
+} from "./utils/actionTypes";
 import trackApi from "../api/trackApi";
 import _ from "lodash";
 export const initialState = { tracks: null, error: null, success: null };
@@ -12,6 +17,9 @@ export const trackReducer = produce((state = initialState, action) => {
             return state;
         case CREATE_TRACK:
             state.tracks.unshift(action.payload);
+            return state;
+        case CLEAN_UP:
+            state = initialState;
             return state;
         case ALERT_ERROR:
             state.error = { message: action.payload };
@@ -52,8 +60,12 @@ const createTrack = (dispatch) => async (formValues) => {
     }
 };
 
+const cleanup = (dispatch) => () => {
+    dispatch({ type: CLEAN_UP });
+};
+
 export const { Provider, Context } = createDataContext(
     trackReducer,
-    { getTracks, createTrack },
+    { getTracks, createTrack, cleanup },
     initialState
 );

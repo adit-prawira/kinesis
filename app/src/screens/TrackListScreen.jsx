@@ -60,7 +60,9 @@ const TrackListScreen = ({ navigation }) => {
     const {
         state: { tracks },
         getTracks,
+        cleanup,
     } = useContext(TrackContext);
+
     const renderListItem = ({ item, index }) => (
         <ListItem
             title={`${item.name} `}

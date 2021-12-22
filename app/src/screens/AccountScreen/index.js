@@ -8,6 +8,7 @@ import moment from "moment";
 import { accountScreenStyles as styles } from "./styles";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import NumericInput from "react-native-numeric-input";
+import { useCleanup } from "../../hooks";
 const initialHealthForm = {
     mass: 0,
     height: 0,
@@ -38,6 +39,7 @@ const AccountScreen = () => {
     const [date, setDate] = useState(moment);
     const [health, setHealth] = useState(initialHealthForm);
     const [isEditing, setIsEditing] = useState(false);
+    const cleanup = useCleanup();
     const handleToggleEditing = () => setIsEditing(!isEditing);
     const handlePickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -63,6 +65,10 @@ const AccountScreen = () => {
     const handleUpdate = async () => {
         await updateHealthProfile(health);
         setIsEditing(false);
+    };
+    const handleSignOut = () => {
+        signOut();
+        cleanup();
     };
     useEffect(() => {
         let mounted = true;
@@ -214,7 +220,7 @@ const AccountScreen = () => {
                         appearance="outline"
                         status="danger"
                         style={styles.button}
-                        onPress={signOut}
+                        onPress={handleSignOut}
                     >
                         Sign Out
                     </Button>

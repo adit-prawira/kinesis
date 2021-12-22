@@ -19,7 +19,7 @@ const TrackDetailsScreen = ({
     const {
         state: { details },
         getTrack,
-        cleanUpTrackDetails,
+        cleanup,
     } = useContext(TrackDetailsContext);
     const calcInitialParams = () => {
         const totalLocationRecorded = details.locations.length - 1;
@@ -52,10 +52,10 @@ const TrackDetailsScreen = ({
             });
             return () => {
                 mounted = false;
-                cleanUpTrackDetails();
+                cleanup();
             };
         }
-    }, [details, cleanUpTrackDetails]);
+    }, [details, cleanup]);
 
     const dataIsReadyToRender = () => details && midPoint && markers;
 
