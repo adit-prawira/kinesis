@@ -57,6 +57,10 @@ export const authReducer = produce((state = initialState, action) => {
     }
 });
 
+async function getCurrentUser() {
+    const res = await trackApi.get("/api/users/currentuser");
+    return res.data.currentUser;
+}
 /**
  *
  * @param {Function} dispatch
@@ -83,9 +87,9 @@ const signUp =
 
             // If signed up => modify the state that the user is authenticated => store tosken in storage
             await AsyncStorage.setItem("token", token);
-
+            const currentUser = await getCurrentUser();
             // dispatch to reducer
-            dispatch({ type: SIGN_IN, payload: token });
+            dispatch({ type: SIGN_IN, payload: { token, currentUser } });
             navigate("List");
         } catch (err) {
             // if fails => reflect an error message
@@ -121,9 +125,9 @@ const signIn =
 
             // If signed in => modify the state that the user is authenticated
             await AsyncStorage.setItem("token", token);
-
+            const currentUser = await getCurrentUser();
             // if fails => reflect an error message
-            dispatch({ type: SIGN_IN, payload: token });
+            dispatch({ type: SIGN_IN, payload: { token, currentUser } });
             navigate("List");
         } catch (err) {
             // dispatch to reducer
@@ -156,8 +160,7 @@ const signOut = (dispatch) => async () => {
 const autoLocalSignIn = (dispatch) => async () => {
     try {
         const token = await AsyncStorage.getItem("token");
-        const res = await trackApi.get("/api/users/currentuser");
-        const currentUser = res.data.currentUser;
+        const currentUser = await getCurrentUser();
 
         if (token) {
             dispatch({ type: SIGN_IN, payload: { token, currentUser } });

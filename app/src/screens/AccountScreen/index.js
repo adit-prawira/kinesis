@@ -146,6 +146,7 @@ const AccountScreen = () => {
             </View>
         </View>
     );
+    console.log(currentUser);
     return currentUser ? (
         <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
