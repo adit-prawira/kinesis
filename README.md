@@ -1,5 +1,7 @@
 # Kinesis
 
+
+
 ## Step 1: Important proceeding to Step 2
 
 Run:
@@ -35,3 +37,4 @@ yarn start
 ```
 
 Step 3 - Scan the QR Code generated in the terminal window with the Expo Go app after running yarn start.
+
