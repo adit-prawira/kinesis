@@ -2,6 +2,16 @@
 
 Kinesis is a fitness mobile app that works on android and ios. This application is built with the MERN stack and utilise React native as the main mobile framework for this project. The system has the ability to track out current locations in real-time and able to record our running/jogging or any location dynamic exercises path and calculate how many calories that burned per minute, based on the chosen exercise’s MET level and time spent on that specific exercise.
 
+User's also able to edit their health profile such as age, height, and mass which will affect how their body system burns calories. S3 bucket cloud storage on AWS also being integrated into this app in the case user wants to make their profile more lifely by uploading their image profile. Thus, AWS S3 event handler functions are provided within the server-side application. 
+
+Expo Go is the platform that allows the front-end (Mobile) application for this project to be available in the cloud/internet and thus anyone can use this app on their Apple or Android devices.
+
+Both client and server-side applications are developed in a test-driven environment with jest, and CI/CD Pipeline with CircleCI is applied on the server-side application which will perform pre-processes assignments automation before the server-side’s deployment to Heroku.
+
+Below is the system design diagram of how this project is structured.
+
+
+
 ## How to run the app on your local machine/mobile (development environment)?
 
 ### Step 1: Important proceeding to Step 2
