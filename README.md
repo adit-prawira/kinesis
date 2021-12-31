@@ -10,7 +10,7 @@ Both client and server-side applications are developed in a test-driven environm
 
 Below is the system design diagram of how this project is structured.
 
-
+![MyProjects-Kinesis drawio](https://user-images.githubusercontent.com/61646199/147807572-89af9bcd-42f6-432b-b198-b4c5f4679971.png)
 
 ## How to run the app on your local machine/mobile (development environment)?
 
@@ -53,4 +53,5 @@ Step 3 - Scan the QR Code generated in the terminal window with the Expo Go app 
 ## How to run the app on your mobile phone (published app)?
 
 First, you are required to install the Expo Go app on your mobile. After successful installation please access the following link (https://expo.dev/@adit-prawira/kinesis) or scan the following QR code with the Expo Go App. 
+![qr](https://user-images.githubusercontent.com/61646199/147807582-1d7d3a9c-ba22-4331-a0a1-b251955dc9ad.png)
 
