@@ -77,7 +77,7 @@ const metDataList = [
 
 const TrackForm = () => {
     const {
-        state: { name, recording, locations },
+        state: { name, recording, locations, met },
         startRecording,
         stopRecording,
         updateTrackName,
@@ -188,13 +188,19 @@ const TrackForm = () => {
                             valid={
                                 !recording &&
                                 locations.length > 0 &&
-                                name.length > 0
+                                name.length > 0 &&
+                                met !== 0
                             }
                         />
                     )}
                     style={styles.button}
                     disabled={
-                        !(!recording && locations.length > 0 && name.length > 0)
+                        !(
+                            !recording &&
+                            locations.length > 0 &&
+                            name.length > 0 &&
+                            met !== 0
+                        )
                     }
                     onPress={async () => {
                         await saveTrack();

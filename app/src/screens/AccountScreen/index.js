@@ -146,7 +146,7 @@ const AccountScreen = () => {
             </View>
         </View>
     );
-    console.log(currentUser);
+
     return currentUser ? (
         <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
@@ -167,9 +167,8 @@ const AccountScreen = () => {
                 <Text style={styles.textSecondary}>Here's your summary</Text>
                 <Button
                     onPress={handlePickImage}
-                    appearance="outline"
                     size="small"
-                    status="success"
+                    status="basic"
                     style={styles.uploadButton}
                 >
                     Upload Profile Picture

@@ -131,7 +131,6 @@ AuthForm.propTypes = {
     errorMessage: PropTypes.string,
     screenTitle: PropTypes.string,
     onSubmit: PropTypes.func,
-
     mode: PropTypes.arrayOf(["signin", "signup"]),
 };
 export default AuthForm;
